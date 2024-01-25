@@ -4,19 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Dashboard</h1>
-
-    <ul>
-        <a href="/data_customer">
-            <li>Data Customer</li>
-        </a>
-    </ul>
+    <!-- start navbar header -->
+    <%-include('partials/header'); %>
+    <!-- end navbar header -->
 
 
+    <div class="container mt-3">        
+        <h1>Dashboard</h1>
+
+        <ul>
+            <a href="/data_customer">
+                <li>Data Customer</li>
+            </a>
+        </ul>
+    </div>
 
 
+
+  <!-- Vendor JS Files -->
+  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     
 </body>
 </html>

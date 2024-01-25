@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= locals.title %></title>
+  
+  <!-- <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+
+  <!-- start navbar header -->
+  <%-include('partials/header'); %>
+  <!-- end navbar header -->
+
+    <div class="container">
+      <div class="col py-3">
+          <div class="row">
+              <div class="col">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <!-- <li class="breadcrumb-item active"><%= book.firstName  %></li> -->
+                  </ol>
+                </nav>
+              </div>
+              <div class="col text-end fw-lighter">
+                <!-- <b>Last Updated <%= new Date(book.updatedAt).toUTCString() %> </b>
+                <b>UserId:</b> <%= book._id %> -->
+              </div>
+            </div>
+    
+            <div class="d-flex djustify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <!-- <h1 class="h2"><%= book.firstName  %> <%= book.lastName  %></h1> -->
+                <div class="btn-toolbar mb-2 mb-md 0">
+                  <div class="btn-group me-2">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                  </div>
+                </div>
+            </div>
+      </div>
+
+      <div class="row border border-1 border-dark mb-3 pb-3">
+        <div class="col-lg-3 mt-3">
+          <label class="form-label" for="">Title</label>
+          <input class="form-control" type="text" disabled value="<%= book.title_book %>">
+
+        </div>
+
+        <div class="col-lg-3 mt-3">
+          <label class="form-label" for="">Author</label>
+          <input class="form-control" type="text" disabled value="<%= book.author %>">
+        </div>
+
+        <div class="col-lg-3 mt-3">
+          <label class="form-label" for="">Publisher</label>
+          <input class="form-control" type="text" disabled value="<%= book.publisher %>">
+        </div>
+
+        <div class="col-lg-3 mt-3">
+          <label class="form-label" for="">Publication Year</label>
+          <% 
+              const publicationYear = new Date(book.publication_year);
+              const formattedDate = publicationYear.toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric'
+              });
+          %>
+          <input class="form-control" type="text" disabled value="<%= formattedDate %>">
+        </div>
+        
+        <!-- stop dan buat baris baru -->
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3 mt-3">
+          <label class="form-label" for="">Number of Page </label>
+          <input class="form-control" type="number" disabled value="<%= book.number_of_page %>">
+        </div>
+
+        
+        <div class="col-lg-3 mt-3">
+          <label class="form-label" for="">PDF Book</label>
+          <input class="form-control" type="text" disabled value="<%= book.book_pdf %>">
+          <div class="form-text" id="basic-addon4">*)Open File</div>
+          <!-- <img src="https://www.bhmpics.com/downloads/wallpaper-none/2.nothing-4m.jpg" class="img-thumbnail rounded" alt=""> -->
+        </div>
+
+        <div class="col-lg-3 mt-3">
+          <label class="form-label" for="">Book Cover</label>
+          <!-- <input class="form-control" type="number" disabled value="<%= book.number_of_page %>"> -->
+          <img src="/<%= book.book_cover %>" class="img-thumbnail rounded" alt="">
+
+        </div>
+
+      </div>
+
+      <div class="mt-5">
+        <a href="/data_book" class="btn btn-warning">Back</a>
+        <button class="btn btn-danger">Delete Book</button>
+      </div>
+
+
+      <div class="row">
+
+      </div>
+    </div>
+
+    
+
+    
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+</body>
+</html>

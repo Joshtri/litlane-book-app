@@ -1,19 +1,19 @@
 require('dotenv').config();
 const express = require('express');
-
-// const {flash} = require('express-flash-message')
+const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
-const mongoose = require('mongoose');
-const path = require('path');
-const methodOverride = require('method-override');
 const connectDB = require('./config/db');
+const path = require('path');
 
 
 const app = express();
 const PORT = process.env.PORT;
 const customerRouter = require('./router/customer');
+const bookRouter = require('./router/book');
+const loginRouter = require('./router/login');
 
+const userRouter = require('./router/mainUser');
 
 connectDB();
 
@@ -25,6 +25,8 @@ app.use(methodOverride('_method'));
 
 app.use(express.static(__dirname + "/public"));
 
+
+app.use('/uploads',express.static(path.join(__dirname,'uploads')));
 // Express Session
 app.use(
     session({
@@ -46,12 +48,17 @@ app.use(flash({ sessionKeyName: 'flashMessage' }));
 app.set("views",[
     path.join(__dirname, "/views"),
     path.join(__dirname, "/views/customers"),
+    path.join(__dirname, "/views/books"),
+    path.join(__dirname, "/views/users"),
 ])
 
 
 app.set('view engine', 'ejs');
 
 app.use('/', customerRouter);
+app.use('/', bookRouter);
+app.use('/', loginRouter);
+app.use('/', userRouter)
 
 app.listen(PORT,()=>{
     console.log(`server started at http://localhost:${PORT}`);

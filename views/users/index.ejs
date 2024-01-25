@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shape Divider Example</title>
+
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <style>
+        /* CSS untuk mengatur posisi relative pada wrapper element */
+        .section-wrapper {
+            position: relative;
+        }
+
+        .custom-shape-divider-bottom-1706085766 {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .custom-shape-divider-bottom-1706085766 svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 103px;
+            transform: rotateY(180deg);
+        }
+
+        .custom-shape-divider-bottom-1706085766 .shape-fill {
+            fill: #C27979;
+        }
+    </style>
+
+    <style>
+        * {
+            margin: 0; 
+            padding : 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- navbar user. -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Litlane Book</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ms-auto">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                            <a href="/main" class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Features</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Pricing</a>
+
+                        </li>
+
+                        <li class="nav-item me-2">
+                            <a class="nav-link disabled" aria-disabled="true">About</a>
+                        </li>
+
+                        <div class="col-lg-6">
+                            <form class="d-flex" role="search">
+                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </nav>
+
+    <div class="section-wrapper" style="background-color: #FDF7E4; min-height: 100vh;">
+        <!-- HTML untuk bentuk divider -->
+        <div class="custom-shape-divider-bottom-1706085766">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+            </svg>
+        </div>
+        <!-- Konten lain di dalam wrapper element -->
+
+
+
+
+        <div class="container pt-4">
+            <div class="d-flex align-items-center justify-content-center" style="height: 100vh;">
+                <div class="row">
+
+                    <div class="mx-auto col-lg-5 border border-1 border-danger">
+                        <h1 >LOGO</h1>
+                        <p>Isi halaman...</p>
+                    </div>
+
+                    <div class="col-lg-4 mx-auto" style="text-align: justify;">
+                        
+                        <p>Selamat datang di website Litlane Book yang merupakan 
+                            website untuk mengakses E-Book dengan berbagai macam genre dan E-Book tersebut bersifat gratis.
+                        </p>
+
+                        <a href="/main" class="btn btn-primary">Masuk ke Beranda</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+    </div>  
+
+<!-- Wrapper element dengan posisi relative -->
+<div class="container">
+
+</div>
+
+</body>
+</html>

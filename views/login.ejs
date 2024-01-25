@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= locals.title %></title>
+    <meta name="description" content="<%=  locals.description %>">
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+
+</head>
+<body>
+
+    <!-- As a heading -->
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">Litlane Book</span>
+        </div>
+    </nav>
+
+    <div class="container" style="padding-top: 60px;">
+        <div class="col-lg-12">
+
+            <div class="col-lg-3 mb-4 pb-2 pt-2">
+                <h5 class=""></h5>
+                
+                <ul class="list-group list-group-horizontal">
+                    <button type="button" id="menu-dashboard" class="list-group-item list-group-item-action active">Log In</button>
+                    <button type="button" id="menu-berita-terkini" class="list-group-item list-group-item-action">Sign Up</button>
+                </ul>
+            </div>
+
+            <div class="fw-light mb-1">Log In</div>
+            <section>
+                <form action="/post_login" method="POST">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Please enter your username & password</h4>
+                            <hr>
+
+                            <div class="mb-3 row">
+                                <label for="" class="col-sm-2 col-form-label">Username</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="username" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="" class="col-sm-2 col-form-label">password</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="password" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Log In</button>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3 row">
+                                <label for="" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <a href="" class="link-info">Forgot your password ?</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <!-- Vendor JS Files -->
+  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

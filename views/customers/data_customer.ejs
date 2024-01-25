@@ -1,115 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= locals.title %></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= locals.title %></title>
+  <meta name="description" content="<%= locals.description %>">
 
     <!-- <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css"> -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
 
-    <%-include('header'); %>
+  <!-- start navbar header -->
+  <%-include('partials/header'); %>
+  <!-- end navbar header -->
 
 
-    <div class="container mt-4">
-        <h1 style="color: red;"><%= message %></h1>
+  <div class="container mt-4">
+    <% message.forEach(element => { %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <%= element %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% }) %>
 
-        <a class="btn btn-sm btn-warning" href="/add_customer">
-          Tambah Customer
-        </a>
-        <div class="table-responsive mt-4">
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-    
+      <a class="btn btn-sm btn-warning" href="/add_customer">
+        Tambah Customer
+      </a>
+      <div class="table-responsive mt-4">
+        
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+  
 
-            <table class="table table-striped table-sm">
-              <thead>
-                <tr>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col" class="text-end">Action</th>
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col" class="text-end">Action</th>
+              </tr>
+            </thead>
+        
+            <tbody>
+              <% customers.forEach(element => { %>
+                <tr class="align-middle">
+                  <td><%= element.firstName %></td>
+                  <td><%= element.lastName %></td>
+                  <td><%= element.email %></td>
+                  <td class="text-end">
+        
+                    <div class="d-flex flex-row justify-content-end gap-2">
+        
+                      <a href="/detail_customer/<%= element._id %>" type="button" class="btn btn-primary btn-small">
+                        <i class="bi bi-eye"></i>
+                      </a>
+        
+                      <a href="/edit_customer/<%= element._id %>" type="button" class="btn btn-warning btn-small">
+                        <i class="bi bi-pencil"></i>
+                      </a>
+        
+                      <form action="/delete_customer/<%= element._id %>?_method=DELETE" method="POST" class="position-relative">
+                        <button type="submit" class="btn btn-danger btn-small">
+                          <i class="bi bi-person-x"></i>
+                        </button>
+                      </form>
+        
+                    </div>
+        
+        
+                  </td>
                 </tr>
-              </thead>
-          
-              <tbody>
-                <% customers.forEach(element => { %>
-                  <tr class="align-middle">
-                    <td><%= element.firstName %></td>
-                    <td><%= element.lastName %></td>
-                    <td><%= element.email %></td>
-                    <td class="text-end">
-          
-                      <div class="d-flex flex-row justify-content-end gap-2">
-          
-                        <a href="/detail_customer/<%= element._id %>" type="button" class="btn btn-primary btn-small">
-                          <i class="bi bi-eye"></i>
-                        </a>
-          
-                        <a href="/edit_customer/<%= element._id %>" type="button" class="btn btn-warning btn-small">
-                          <i class="bi bi-pencil"></i>
-                        </a>
-          
-                        <form action="/delete_customer/<%= element._id %>?_method=DELETE" method="POST" class="position-relative">
-                          <button type="submit" class="btn btn-danger btn-small">
-                            <i class="bi bi-person-x"></i>
-                          </button>
-                        </form>
-          
-                      </div>
-          
-          
-                    </td>
-                  </tr>
-                <% }) %>
-              </tbody>
-            </table>
-        </div>
+              <% }) %>
+            </tbody>
+          </table>
+      </div>
 
 
-        <% if (customers.length > 0) { %>
-            <nav aria-label="Dashboard Pagination">
-              <ul class="pagination justify-content-center mt-5">
-          
-                <% if (current == 1) { %>
-                  <li class="page-item disabled"><a href="#" class="page-link">First</a></li>
+      <!-- Start Pagination number.  -->
+      <!-- P.S i got it from raddy wkwk -->
+      <% if (customers.length > 0) { %>
+          <nav aria-label="Dashboard Pagination">
+            <ul class="pagination justify-content-center mt-5">
+        
+              <% if (current == 1) { %>
+                <li class="page-item disabled"><a href="#" class="page-link">First</a></li>
+              <% } else { %>
+                <li class="page-item"><a href="/?page=1" class="page-link">First</a></li>
+              <% } %>
+        
+              <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+              <% if(i !== 1) { %>
+                <li class="page-item disabled"><a href="#" class="page-link">...</a></li>
+              <% } %>
+        
+              <% for(; i <= (Number(current) + 4) && i <= pages; i++ ) { %>
+                <% if (i == current) { %>
+                  <li class="page-item disabled"><a href="#" class="page-link"><%= i %></a></li>
                 <% } else { %>
-                  <li class="page-item"><a href="/?page=1" class="page-link">First</a></li>
+                  <li class="page-item"><a href="/?page=<%= i %>" class="page-link"><%= i %></a></li>
                 <% } %>
-          
-                <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
-                <% if(i !== 1) { %>
+                <% if (i == Number(current) + 4 && i < pages) { %>
                   <li class="page-item disabled"><a href="#" class="page-link">...</a></li>
                 <% } %>
-          
-                <% for(; i <= (Number(current) + 4) && i <= pages; i++ ) { %>
-                  <% if (i == current) { %>
-                    <li class="page-item disabled"><a href="#" class="page-link"><%= i %></a></li>
-                  <% } else { %>
-                    <li class="page-item"><a href="/?page=<%= i %>" class="page-link"><%= i %></a></li>
-                  <% } %>
-                  <% if (i == Number(current) + 4 && i < pages) { %>
-                    <li class="page-item disabled"><a href="#" class="page-link">...</a></li>
-                  <% } %>
-                <% } %>
-          
-                <% if (current == pages) { %>
-                  <li class="page-item disabled"><a href="#" class="page-link">Last</a></li>
-                <% } else { %>
-                  <li class="page-item"><a href="/?page=<%= pages %>" class="page-link">Last</a></li>
-                <% } %>
-          
-              </ul>
-            </nav>
-        <% } %>
-    </div>
+              <% } %>
+        
+              <% if (current == pages) { %>
+                <li class="page-item disabled"><a href="#" class="page-link">Last</a></li>
+              <% } else { %>
+                <li class="page-item"><a href="/?page=<%= pages %>" class="page-link">Last</a></li>
+              <% } %>
+        
+            </ul>
+          </nav>
+      <% } %>
+  </div>
 
     
-
+  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
 </body>
 </html>

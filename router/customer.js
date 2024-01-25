@@ -4,7 +4,7 @@ const {dashboardPage, addCustomer, postCustomer, customerPageView, detailCustome
 
 
 
-router.get('/', dashboardPage);
+router.get('/dashboardUser', dashboardPage);
 router.get('/data_customer',customerPageView );
 router.get('/add_customer', addCustomer);
 router.post('/post_costumer', postCustomer);
