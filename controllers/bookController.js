@@ -1,5 +1,7 @@
 const Book = require('../models/Book');
 const mongoose = require('mongoose');
+const path = require('path');
+const fs = require('fs').promises;
 
 
 
@@ -24,9 +26,11 @@ exports.bookPageView = async (req,res) =>{
         const count = await Book.countDocuments({});
 
         const message = await req.flash('info');
+        const message_edit = await req.flash('editInfo')
         res.render('data_book',{
             locals,
             message,
+            message_edit,
             books,
             current : page,
             pages: Math.ceil(count / perPage),
@@ -108,3 +112,55 @@ exports.editBook = async(req,res)=>{
         
     }
 };
+
+
+/*
+POST DATA EDIT BOOK.
+*/
+
+
+exports.postEditBook = async(req,res)=>{
+    try {
+        await Book.findOneAndUpdate({
+            title_book :  req.body.title_book,
+            author : req.body.author,  
+            publisher : req.body.publisher, 
+            publication_year : req.body.publication_year,
+            number_of_page : req.body.number_of_page
+        }).where(req.params.id);
+
+
+        await req.flash('editInfo', 'Update data buku berhasil !')
+
+        res.redirect('/data_book');
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+/*
+DELETE DATA EDIT BOOK.
+*/
+
+
+exports.postDeleteBook = async (req, res) => {
+    try {
+        const deletedBook = await Book.findByIdAndDelete(req.params.id);
+
+        if (!deletedBook) {
+            return res.status(404).json({ success: false, message: 'Book not found' });
+        }
+
+        const filePath = path.join(__dirname, deletedBook.book_cover);
+
+        // Menggunakan fs.promises.unlink untuk menghapus file
+        await fs.unlink(filePath);
+        console.log('File deleted:', deletedBook.book_cover);
+
+        res.json({ success: true, message: 'Book deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting book:', error);
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+};
+

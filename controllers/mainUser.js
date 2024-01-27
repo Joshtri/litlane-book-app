@@ -13,3 +13,12 @@ exports.mainBookPage = async (req,res)=>{
         books
     });
 }
+
+exports.detailBookUser = async (req,res)=>{
+
+    try {
+        res.render('book_detailUser')
+    } catch (error) {
+        console.log(error);
+    }
+}

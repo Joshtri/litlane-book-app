@@ -37,9 +37,11 @@ exports.customerPageView  = async (req,res)=>{
         const count = await Customer.countDocuments({});
 
         const message = await req.flash('info');
+        const message_edit = await req.flash('editInfo')
         res.render('data_customer',{
             locals,
             message,
+
             customers,
             current : page,
             pages: Math.ceil(count / perPage),
@@ -148,6 +150,7 @@ exports.postEditCustomer = async (req,res)=>{
             email: req.body.email,
             updateAt : Date.now()
         }).where(req.params.id);
+
         
         res.redirect('/data_customer');
     } catch (error) {
@@ -158,6 +161,9 @@ exports.postEditCustomer = async (req,res)=>{
 exports.deleteCustomer = async(req,res)=>{
     try {
         await Customer.deleteOne({_id:req.params.id});
+
+
+
         res.redirect('/data_customer')
 
     } catch (error) {

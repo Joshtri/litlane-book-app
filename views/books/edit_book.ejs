@@ -49,35 +49,36 @@
         </div>
         
         
-        <form action="/edit_customer/<%= book._id %>?_method=PUT" method="POST">
+        <form action="/post_edit_book/<%= book._id %>?_method=PUT" method="POST">
         
           <div class="row form-group mb-4">
             <div class="col">
               <label for="firstName">Title Book</label>
-              <input type="text" class="form-control" id="firstName" name="firstName" value="<%= book.title_book %>" placeholder="First Name" required>
+              <input type="text" class="form-control" id="firstName" name="title_book" value="<%= book.title_book %>" placeholder="Title Book" required>
             </div>
         
             <div class="col">
-              <label for="lastName">Last Name</label>
-              <input type="text" class="form-control" id="lastName" name="lastName" value="<%= book.lastName %>" placeholder="Last Name" required>
+              <label for="lastName">Author</label>
+              <input type="text" class="form-control" id="lastName" name="author" value="<%= book.author %>" placeholder="Last Name" required>
             </div>
           </div>
         
           <div class="row form-group mb-4">
             <div class="col">
-              <label for="tel">Telephone</label>
-              <input type="text" class="form-control" id="tel" name="tel" value="<%= book.tel %>" placeholder="Telephone" required>
+              <label for="tel">Publisher</label>
+              <input type="text" class="form-control" id="tel" name="publisher" value="<%= book.publisher %>" placeholder="Telephone" required>
             </div>
         
             <div class="col">
-              <label for="email">Email</label>
-              <input type="text" class="form-control" id="email" name="email" value="<%= book.email %>" placeholder="Email" required>
+              <label for="email">Publication Year</label>
+              <!-- sementara pake input dengan type date -->
+              <input type="date" class="form-control" id="email" name="email" value="<%= book.publication_year %>" placeholder="Email" required>
             </div>
           </div>
         
           <div class="form-group mb-4">
-              <label for="details">Book Details</label>
-              <textarea class="form-control" name="details" id="details" cols="30" rows="12" placeholder="Customer Details"><%= book.details %></textarea>
+            <label for="email">Number of Page</label>
+            <input type="text" class="form-control" id="email" name="number_of_page" value="<%= book.number_of_page %>" placeholder="Email" required>
           </div>
         
           <div class="form-group mb-4">
@@ -96,19 +97,19 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <div class="modal-title">You are about to remove a customer record.</div>
+                <div class="modal-title">You are about to remove a book record.</div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <p>
-                  This will remove the customer record of <b class="fw-bold"><%= book.firstName %> <%= book.lastName %></b><br/>
+                  This will remove the book record of <b class="fw-bold"><%= book.title_book %></b><br/>
                   Are you sure?
                 </p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <form action="/delete_book/<%= book._id %>?_method=DELETE" method="POST" class="position-relative">
-                  <button type="submit" class="btn btn-primary">Yes, Remove Customer</button>
+                <form action="/post_delete_book/<%= book._id %>?_method=DELETE" method="POST" class="position-relative">
+                  <button type="submit" class="btn btn-primary">Yes, Remove Book</button>
                 </form>
               </div>
             </div>
