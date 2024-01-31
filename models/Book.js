@@ -28,8 +28,9 @@ const BookSchema = new Schema({
         required : true
     },
 
-    book_cover : {
+    cover_book : {
         type : String,
+        required : true
         
     },
 
@@ -37,7 +38,13 @@ const BookSchema = new Schema({
     //setelah dipikir-pikir sebaiknya upload link g drive ato mega saja :)
     //utk file uploadPDF.js tetap ada di local, di github di ignore.
     book_pdf : {
-        type : String
+        type : String,
+        required : true
+    },
+
+    book_description : {
+        type : String,
+        required : false
     }
 
 

@@ -1,27 +1,38 @@
 <nav class="navbar bg-dark border-bottom navbar-expand-lg border-body" data-bs-theme="dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Litlane Book</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="/dashboardUser">Dashboard</a>
-          <a class="nav-link" href="#">Features</a>
-         
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Data
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/data_book">Data Book</a></li>
-              <li><a class="dropdown-item" href="/data_customer">Data Customer</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>  
-          <!-- <a class="nav-link disabled" aria-disabled="true">Disabled</a> -->
-        </div>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Litlane Book</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav"> <!-- Menu sebelah kiri -->
+        <a class="nav-link active" aria-current="page" href="/dashboardUser">Dashboard</a>
+        <a class="nav-link" href="#">Features</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Data
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/data_book">Data Book</a></li>
+            <li><a class="dropdown-item" href="/data_customer">Data Customer</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+      </div>
+      <div class="navbar-nav ms-auto"> <!-- Menu sebelah kanan -->
+        <!-- Dropdown Profile -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Profile
+          </a>
+          <ul class="dropdown-menu">
+            <!-- Tambahkan link atau tombol logout di sini -->
+            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+          </ul>
+        </li>
+        <!-- Akhir Dropdown Profile -->
       </div>
     </div>
+  </div>
 </nav>

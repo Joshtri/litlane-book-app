@@ -1,3 +1,4 @@
+
 const multer = require('multer');
 const path = require('path');
 
@@ -16,21 +17,21 @@ var storage = multer.diskStorage({
 });
 
 
-var upload  = multer ({
-    storage : storage,
-    fileFilter : function(req,file, callback){
-        if(file.mimetype === "image/png" || file.mimetype === "image/jpg"){
-            callback(null,true);
-        }
-        else{
-            console.log('only jpg and png file support');
-            callback(null,false);
+var upload  = multer({
+    storage: storage,
+    fileFilter: function (req, file, callback) {
+        const allowedMimeTypes = ["image/png", "image/jpg", "image/jpeg", "image/gif"];
+
+        if (allowedMimeTypes.includes(file.mimetype)) {
+            callback(null, true);
+        } else {
+            console.log('Only JPG, JPEG, PNG, and GIF files are supported');
+            callback(null, false);
         }
     },
-    limits:{
-        fileSize : 1024 * 1024 * 2
+    limits: {
+        fileSize: 1024 * 1024 * 2
     }
 });
-
 
 module.exports = upload;

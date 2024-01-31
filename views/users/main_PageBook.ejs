@@ -51,7 +51,7 @@
     </nav>
 
     
-    <div class="container mt-3">
+    <div class="container-lg mt-3">
 
         <!-- <div class="row mb-5">
 
@@ -86,12 +86,27 @@
 
 
             <% for(let i=0; i<books.length; i++) { %>
-            <div class="card mx-3 mt-3" style="width: 18rem;">
-                <img src="<%= books[i].book_cover %>" class="card-img-top mt-1" alt="...">
+            <div class="card mx-3 mt-3" style="width: 19rem;">
+                <img src="<%= books[i].cover_book %>" class="card-img-top mt-1" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><%= books[i].title_book %></h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <hr>
+                    <p class="card-text small"><%= books[i].publisher %></p>
                     <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+
+                    <p class="card-text small">
+                        <% 
+                            const maxParagraphLength = 200; // Set your maximum paragraph length
+                            const bookDescription = books[i].book_description || ""; // Ensure it doesn't throw error for null or undefined
+                            if (bookDescription.length > maxParagraphLength) {
+                                // If the paragraph is too long, display a truncated version with "read more" link
+                                const truncatedDescription = bookDescription.substring(0, maxParagraphLength);
+                        %>
+                            <%= truncatedDescription %> <a href="<%= '/detail_book' /* replace with the actual link to the book page */ %>" class="read-more-link">Read more...</a>
+                        <% } else { %>
+                            <%= bookDescription %>
+                        <% } %>
+                    </p>
 
                     <!-- <ul class="nav custom-small-nav nav-pills justify-content-center border border-black">
                         <li class="nav-item">
@@ -110,7 +125,7 @@
                         </li>
 
                         <li class="list-group-item">
-                            <a class="list-group-item-action size-book-cover-card" aria-current="page" href="#">Read</a>
+                            <a class="list-group-item-action size-book-cover-card" aria-current="page" href="<%= books[i].book_pdf %>" target="_blank">Read</a>
                         </li>
 
                         <!-- <li class="nav-item">

@@ -1,7 +1,7 @@
 const Book = require('../models/Book');
 const mongoose = require('mongoose');
-const path = require('path');
-const fs = require('fs').promises;
+// const path = require('path');
+// const fs = require('fs').promises;
 
 
 
@@ -54,14 +54,15 @@ exports.postBook = async (req,res)=>{
         publisher: req.body.publisher,
         publication_year: req.body.publication_year,
         number_of_page: req.body.number_of_page,
+        book_description : req.body.book_description,
         // createdAt:req.body.createdAt
         book_pdf : req.body.book_pdf
     });
 
     if (req.file) {
-        newBook.book_cover = req.file.path; // Update to use 'book_cover'
+        newBook.cover_book = req.file.path; // Update to use 'book_cover'
     }
-    
+
     try {
         await Book.create(newBook);
         // res.render('add_customer');
@@ -95,23 +96,31 @@ exports.detailBook = async (req,res)=>{
 /*
 GET VIEW PAGE EDIT BOOK.
 */
-exports.editBook = async(req,res)=>{
-
+exports.editBook = async (req, res) => {
     const locals = {
-        title : "Edit Book",
-        description : "Edit Book in IS Selling"
-    }
+        title: "Edit Book",
+        description: "Edit Book in IS Selling"
+    };
 
     try {
-        const book = await Book.findOne({_id:req.params.id});
-        res.render('edit_book',{
-            book,
-            locals
-        })
+        const book = await Book.findOne({ _id: req.params.id });
+
+        if (book) {
+            res.render('edit_book', {
+                book,
+                locals
+            });
+        } else {
+            // Handle the case where the book is not found
+            res.status(404).send('Book not found');
+        }
     } catch (error) {
-        
+        // Handle other errors
+        console.error('Error fetching book:', error);
+        res.status(500).send('Internal Server Error');
     }
 };
+
 
 
 /*
@@ -145,22 +154,15 @@ DELETE DATA EDIT BOOK.
 
 exports.postDeleteBook = async (req, res) => {
     try {
-        const deletedBook = await Book.findByIdAndDelete(req.params.id);
+        await Book.deleteOne({_id:req.params.id});
 
-        if (!deletedBook) {
-            return res.status(404).json({ success: false, message: 'Book not found' });
-        }
 
-        const filePath = path.join(__dirname, deletedBook.book_cover);
 
-        // Menggunakan fs.promises.unlink untuk menghapus file
-        await fs.unlink(filePath);
-        console.log('File deleted:', deletedBook.book_cover);
+        await req.flash('deleteInfo', 'Data buku berhasil di hapus')
+        res.redirect('/data_book')
 
-        res.json({ success: true, message: 'Book deleted successfully' });
     } catch (error) {
-        console.error('Error deleting book:', error);
-        res.status(500).json({ success: false, message: 'Internal Server Error' });
+        console.log(error);
     }
 };
 

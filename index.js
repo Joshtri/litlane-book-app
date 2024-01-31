@@ -34,7 +34,7 @@ app.use(
       resave: false,
       saveUninitialized: true,
       cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+        maxAge : 360000,  // Waktu kadaluarsa dalam milidetik (6 menit)
       }
     })
 );
