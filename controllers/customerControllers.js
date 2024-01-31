@@ -38,9 +38,6 @@ exports.customerPageView  = async (req,res)=>{
 
         const message = await req.flash('info');
         const message_edit = await req.flash('editInfo')
-        req.session.adminId = admin._id;
-        req.session.username = admin.username;
-
         res.render('data_customer',{
             locals,
             message,

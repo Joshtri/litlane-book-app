@@ -1,5 +1,6 @@
-// Middleware to check if the user is authenticated
+// auth/protect.js
 const checkAuth = (req, res, next) => {
+  console.log('Middleware checkAuth is running.');
   if (req.session.adminId) {
       // User is authenticated, proceed to the next middleware or route handler
       next();
@@ -8,6 +9,5 @@ const checkAuth = (req, res, next) => {
       res.redirect('/login');
   }
 };
-  module.exports = {
-    checkAuth,
-  };
+
+module.exports = { checkAuth };
