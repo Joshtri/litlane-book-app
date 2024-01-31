@@ -1,16 +1,13 @@
-const isLoggedIn = (req, res, next) => {
-    const { id_admin } = req.session;
-  
-    if (id_admin) {
-      // Pengguna sudah login, lanjutkan ke halaman yang diminta
+// Middleware to check if the user is authenticated
+const checkAuth = (req, res, next) => {
+  if (req.session.adminId) {
+      // User is authenticated, proceed to the next middleware or route handler
       next();
-    } else {
-      // Pengguna belum login, redirect ke halaman login atau halaman yang ditentukan
-      const redirectUrl = req.query.redirect || "/";
-      res.redirect(redirectUrl);
-    }
-  };
-  
+  } else {
+      // User is not authenticated, redirect to the login page
+      res.redirect('/login');
+  }
+};
   module.exports = {
-    isLoggedIn,
+    checkAuth,
   };

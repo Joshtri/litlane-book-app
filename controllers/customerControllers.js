@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 
 
-exports.dashboardPage = async (req,res)=>{
+exports.dashboardPage = async  (req,res)=>{
 
     const locals = {
         title : 'Dashboard',
