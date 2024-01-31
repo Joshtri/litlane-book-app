@@ -8,7 +8,7 @@ const {checkAuth} = require('../auth/protect');
 
 router.get('/data_book', checkAuth,bookPageView ); //get view
 // router.get('/data_book',isLoggedIn,bookPageView ); //get view
-router.get('/add_book', addBook); // get view
+router.get('/add_book', checkAuth,addBook); // get view
 router.post('/post_book', upload.single('cover_book'),postBook); // post book data
 router.get('/detail_book/:id',checkAuth, detailBook) //get view
 router.get('/edit_book/:id',checkAuth, editBook); // get view.
