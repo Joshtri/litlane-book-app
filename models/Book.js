@@ -28,9 +28,9 @@ const BookSchema = new Schema({
         required : true
     },
 
-    cover_book : {
-        type : String,
-        required : true
+    book_cover : {
+        type : String
+        // required : true
         
     },
 

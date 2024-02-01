@@ -17,7 +17,13 @@ const AdminSchema = new mongoose.Schema({
     password : {
         type : String, 
         required : true,
-    }
+    },
+    // role: {
+    //     type: String,
+    //     enum: ['admin', 'manager'], // Hanya nilai 'admin' atau 'manager' yang diperbolehkan
+    //     default: 'admin', // Nilai default jika tidak disediakan
+    // },
+    
 }, {timestamps: true});
 
 

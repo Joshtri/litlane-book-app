@@ -59,8 +59,10 @@
                 <div class="row">
                     <div class="col-lg-4 mb-3">
                         <label for="exampleInputPassword1" class="form-label">Book Cover</label>
-                        <input type="file" class="form-control" name="cover_book" id="exampleInputPassword1" required>
+                        <input type="file" class="form-control" onchange="validateFileSize()" name="file" id="file" required>
+                        <small id="fileSizeError" style="color: red; display: none;">File size should be less than 1MB.</small>
                     </div>
+                    
                     
                     <div class="col-lg-4 mb-3">
                         <label for="exampleInputPassword1" class="form-label">Book PDF (link)</label>
@@ -81,6 +83,29 @@
     </div>
 
     <!-- vendor js files. -->
+    
+    <script>
+        function validateFileSize() {
+            const fileInput = document.getElementById('file');
+            const fileSizeError = document.getElementById('fileSizeError');
+            
+            if (fileInput.files.length > 0) {
+                const fileSize = fileInput.files[0].size; // in bytes
+                const maxSize = 1024 * 1024; // 1MB
+    
+                if (fileSize > maxSize) {
+                    fileSizeError.style.display = 'block';
+                    return false; // Prevent form submission
+                } else {
+                    fileSizeError.style.display = 'none';
+                    return true; // Allow form submission
+                }
+            }
+    
+            return true; // Allow form submission if no file is selected
+        }
+    </script>
     <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    
 </body>
 </html>
