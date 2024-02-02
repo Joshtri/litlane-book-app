@@ -1,10 +1,10 @@
-const express = require('express');
-const router = express.Router();
+// const express = require('express');
+// const router = express.Router();
 
-const {createAdminAccount} = require('../controllers/loginController')
-
-
+// const {createAdminAccount} = require('../controllers/loginController')
 
 
 
-module.exports = router;
+
+
+// module.exports = router;
