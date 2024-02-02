@@ -32,10 +32,11 @@ app.use(express.static(__dirname + "/public"));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
-app.set('trust proxy', 1)
+app.set('trust proxy', true)
 // Express Session
 app.use(
   session({
+    proxy: true,
     secret: 'secret',
     resave: false,
     saveUninitialized: true,
