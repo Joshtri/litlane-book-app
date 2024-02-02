@@ -15,7 +15,7 @@ const client = redis.createClient({
   password: process.env.REDIS_PASS,
   socket: { 
     host: process.env.REDIS_HOST,
-    port: process.envREDIS_PORT,
+    port: process.env.REDIS_PORT,
   }
 });
 (async () => { await client.connect(); })()
