@@ -37,8 +37,9 @@ app.set('trust proxy', 1)
 app.use(
   session({
     secret: 'secret',
-    resave: true,
+    resave: false,
     saveUninitialized: true,
+    name: 'LitlaneBook',
     cookie: {
       maxAge: 360000,  // Waktu kadaluarsa dalam milidetik (6 menit)
       secure: true,
