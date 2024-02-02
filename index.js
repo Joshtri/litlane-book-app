@@ -29,32 +29,32 @@ app.use(express.static(__dirname + "/public"));
 
 app.use('/uploads',express.static(path.join(__dirname,'uploads')));
 // Express Session
-// app.use(
-//     session({
-//       secret: 'secret',
-//       resave: false,
-//       saveUninitialized: true,
-//       cookie: {
-//         maxAge : 360000,  // Waktu kadaluarsa dalam milidetik (6 menit)
-//       }
-//     })
-// );
-
 app.use(
-  session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-      maxAge: 360000,  // Waktu kadaluarsa dalam milidetik (6 menit)
-      secure: true,   // Hanya mengirim cookie melalui HTTPS
-      // sameSite: 'none', // Sesuaikan sesuai kebutuhan keamanan
-      // Jika Anda menggunakan subdomain, sesuaikan domain sesuai kebutuhan
-      // domain: 'yourdomain.com'
-      // httpOnly: false
-    },
-  })
+    session({
+      secret: 'secret',
+      resave: false,
+      saveUninitialized: true,
+      cookie: {
+        maxAge : 360000,  // Waktu kadaluarsa dalam milidetik (6 menit)
+      }
+    })
 );
+
+// app.use(
+//   session({
+//     secret: 'secret',
+//     resave: true,
+//     saveUninitialized: true,
+//     cookie: {
+//       maxAge: 360000,  // Waktu kadaluarsa dalam milidetik (6 menit)
+//       secure: true,   // Hanya mengirim cookie melalui HTTPS
+//       // sameSite: 'none', // Sesuaikan sesuai kebutuhan keamanan
+//       // Jika Anda menggunakan subdomain, sesuaikan domain sesuai kebutuhan
+//       // domain: 'yourdomain.com'
+//       // httpOnly: false
+//     },
+//   })
+// );
 // Flash Messages
 app.use(flash({ sessionKeyName: 'flashMessage' }));
 
