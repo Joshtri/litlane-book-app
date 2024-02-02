@@ -24,43 +24,36 @@ exports.loginPage = async(req,res)=>{
 
 //POST Login user. 
 
-exports.postLoginUser = async (req,res)=>{
-    const { username, password } = req.body;
 
-    try {
-        // Cari admin berdasarkan username
-        const admin = await Admin.findOne({ username });
+exports.postLoginUser = async (req, res) => {
+  const { username, password } = req.body;
 
-        // Periksa apakah admin ditemukan
-        if (!admin) {
-            // Jika tidak ditemukan, berikan pesan flash dan redirect ke halaman login
-            await req.flash('error', 'Username atau password salah.');
-            return res.redirect('/login');
-        }
+  try {
+    const admin = await Admin.findOne({ username });
 
-        // Periksa kecocokan password dengan menggunakan bcrypt
-        const passwordMatch = await bcrypt.compare(password, admin.password);
-
-        if (passwordMatch) {
-            // Jika password cocok, atur sesi untuk menyimpan informasi login
-            req.session.adminId = admin._id;
-            req.session.username = admin.username;
-
-            // Berikan pesan flash dan redirect ke halaman beranda atau halaman yang diinginkan
-            await req.flash('success', 'Login berhasil!');
-            res.redirect('/dashboardUser'); // Ganti '/dashboard' dengan halaman yang sesuai
-        } else {
-            // Jika password tidak cocok, berikan pesan flash dan redirect ke halaman login
-            await req.flash('error', 'Username atau password salah.');
-            res.redirect('/login');
-        }
-    } catch (error) {
-        console.log(error);
-        // Handle error appropriately, misalnya, tampilkan pesan kesalahan kepada pengguna
-        await req.flash('error', 'Terjadi kesalahan saat login.');
-        res.redirect('/login'); // Redirect kembali ke halaman login jika ada kesalahan
+    if (!admin) {
+      req.flash('error', 'Username atau password salah.');
+      return res.redirect('/login');
     }
-}
+
+    const passwordMatch = await bcrypt.compare(password, admin.password);
+
+    if (passwordMatch) {
+      req.session.adminId = admin._id;
+      req.session.username = admin.username;
+
+      req.flash('success', 'Login berhasil!');
+      res.redirect('/dashboardUser'); // Rute yang di-proteksi dengan middleware checkAuth
+    } else {
+      req.flash('error', 'Username atau password salah.');
+      res.redirect('/login');
+    }
+  } catch (error) {
+    console.log(error);
+    req.flash('error', 'Terjadi kesalahan saat login.');
+    res.redirect('/login');
+  }
+};
 
 exports.createAdminAccount = async (req,res)=>{
     const newAdmin = {

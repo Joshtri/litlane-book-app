@@ -14,6 +14,7 @@ const bookRouter = require('./router/book');
 const loginRouter = require('./router/login');
 
 const userRouter = require('./router/mainUser');
+const { checkAuth } = require('./auth/protect');
 
 connectDB();
 
@@ -53,10 +54,21 @@ app.use(
     },
   })
 );
-
-
 // Flash Messages
 app.use(flash({ sessionKeyName: 'flashMessage' }));
+
+app.set('view engine', 'ejs');
+
+app.use('/', customerRouter);
+app.use('/', bookRouter);
+app.use('/', loginRouter);
+app.use('/', userRouter)
+// Middleware checkAuth ditempatkan setelah express-session
+app.use(checkAuth);
+
+
+
+
 
 
 
@@ -68,12 +80,7 @@ app.set("views",[
 ])
 
 
-app.set('view engine', 'ejs');
 
-app.use('/', customerRouter);
-app.use('/', bookRouter);
-app.use('/', loginRouter);
-app.use('/', userRouter)
 
 app.listen(PORT,()=>{
     console.log(`server started at http://localhost:${PORT}`);
