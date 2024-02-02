@@ -4,6 +4,7 @@ const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
 const connectDB = require('./config/db');
+const { checkAuth } = require('./auth/protect');
 const path = require('path');
 
 
@@ -14,7 +15,6 @@ const bookRouter = require('./router/book');
 const loginRouter = require('./router/login');
 
 const userRouter = require('./router/mainUser');
-const { checkAuth } = require('./auth/protect');
 
 connectDB();
 

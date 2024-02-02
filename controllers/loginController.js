@@ -24,7 +24,6 @@ exports.loginPage = async(req,res)=>{
 
 //POST Login user. 
 
-
 exports.postLoginUser = async (req, res) => {
   const { username, password } = req.body;
 
@@ -40,7 +39,7 @@ exports.postLoginUser = async (req, res) => {
 
     if (passwordMatch) {
       req.session.adminId = admin._id;
-      req.session.username = admin.username;
+    //   req.session.username = admin.username;
 
       req.flash('success', 'Login berhasil!');
       res.redirect('/dashboardUser'); // Rute yang di-proteksi dengan middleware checkAuth
