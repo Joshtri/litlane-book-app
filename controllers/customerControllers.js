@@ -5,14 +5,19 @@ const mongoose = require('mongoose');
 
 exports.dashboardPage = async  (req,res)=>{
 
+    // Mengakses data sesi yang telah disimpan saat login
+    const { userId, username } = req.user;
+
     const locals = {
         title : 'Dashboard',
-        description : 'Main dashboard of IS Selling'
+        description : 'Main dashboard of IS Selling',
+        userId: userId, // Menambahkan informasi sesi ke objek lokal
+        username: username
     }
 
 
     res.render('dashboard',{
-        
+        locals
     });
 }
 

@@ -1,19 +1,18 @@
-module.exports = {
-	isLoggedIn : (req, res, next) => {
+// auth/protect.js
+const isLoggedIn = (req, res, next) => {
+  const { userId, username } = req.session;
 
-		console.log("user: ", req.session.adminId);
-		if (!req.session.adminId)
-			res.redirect('/login')
-		else
-			next()
+  console.log('userId:', userId);
+  console.log('username:', username);
 
-	},
-	redirectIfLoggedIn : (req, res, next) => {
+  if (userId && username) {
+    req.user = { userId, username };
+    return next();
+  } else {
+    console.log('Redirecting to login due to authentication failure.');
+    req.flash('error', 'Anda harus login untuk mengakses halaman ini.');
+    return res.redirect('/login');
+  }
+};
 
-		if (req.session.adminId)
-			res.redirect('/dashboardUser')
-		else
-			next()
-
-	}
-}
+module.exports = { isLoggedIn };

@@ -36,7 +36,7 @@ app.use(
       saveUninitialized: true,
       cookie: {
         maxAge : 360000,  // Waktu kadaluarsa dalam milidetik (6 menit)
-        secure : false,
+        // secure : true,
       }
     })
 );

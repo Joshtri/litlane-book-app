@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt')
 const Admin = require('../models/Admin');
+const { v4: uuidv4 } = require('uuid');
+
 const session = require('express-session');
 
 
@@ -23,7 +25,6 @@ exports.loginPage = async(req,res)=>{
 
 
 //POST Login user. 
-
 exports.postLoginUser = async (req, res) => {
   const { username, password } = req.body;
 
@@ -38,21 +39,26 @@ exports.postLoginUser = async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, admin.password);
 
     if (passwordMatch) {
-      req.session.adminId = admin._id;
-    //   req.session.username = admin.username;
+      // Generate a unique identifier (UUID) for the user
+      const userId = uuidv4();
+
+      // Save user information in the session
+      req.session.userId = userId;
+      req.session.username = admin.username;
 
       req.flash('success', 'Login berhasil!');
-      res.redirect('/dashboardUser'); // Rute yang di-proteksi dengan middleware checkAuth
+      return res.redirect('/dashboardUser');
     } else {
       req.flash('error', 'Username atau password salah.');
-      res.redirect('/login');
+      return res.redirect('/login');
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     req.flash('error', 'Terjadi kesalahan saat login.');
-    res.redirect('/login');
+    return res.redirect('/login');
   }
 };
+
 
 exports.createAdminAccount = async (req,res)=>{
     const newAdmin = {
