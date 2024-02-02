@@ -1,7 +1,7 @@
 module.exports = {
 	isLoggedIn : (req, res, next) => {
 
-		console.log("user: ", req.session.user_id);
+		console.log("user: ", req.session.adminId);
 		if (!req.session.adminId)
 			res.redirect('/login')
 		else

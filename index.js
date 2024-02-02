@@ -30,18 +30,16 @@ app.use(express.static(__dirname + "/public"));
 app.use('/uploads',express.static(path.join(__dirname,'uploads')));
 // Express Session
 app.use(
-  session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-      maxAge: 360000,  // Waktu kadaluarsa dalam milidetik (6 menit)
-      secure: true,   // Hanya mengirim cookie melalui HTTPS
-      sameSite: 'Strict', // Sesuaikan sesuai kebutuhan keamanan
-    }
-  })
-);  
-
+    session({
+      secret: 'secret',
+      resave: true,
+      saveUninitialized: true,
+      cookie: {
+        maxAge : 360000,  // Waktu kadaluarsa dalam milidetik (6 menit)
+        secure : false,
+      }
+    })
+);
 
 // app.use(
 //   session({
@@ -59,8 +57,8 @@ app.use(
 //   })
 // );
 // Flash Messages
-
-
+// Middleware checkAuth ditempatkan setelah express-session
+// app.use(isLoggedIn);
 app.use(flash({ sessionKeyName: 'flashMessage' }));
 
 app.set('view engine', 'ejs');
@@ -71,8 +69,8 @@ app.use('/', loginRouter);
 app.use('/', userRouter)
 
 
-// Middleware checkAuth ditempatkan setelah express-session
-app.use(isLoggedIn);
+
+
 
 
 
