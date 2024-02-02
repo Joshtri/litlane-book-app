@@ -3,20 +3,20 @@ const router = express.Router();
 const {dashboardPage, addCustomer, postCustomer, customerPageView, detailCustomer,editCustomer,postEditCustomer, deleteCustomer, searchCustomer} = require('../controllers/customerControllers');
 
 
-const {checkAuth} = require('../auth/protect');
+const {isLoggedIn} = require('../auth/protect');
 
-router.get('/dashboardUser', checkAuth,dashboardPage);
+router.get('/dashboardUser', isLoggedIn,dashboardPage);
 
-router.get('/data_customer',checkAuth,customerPageView );
-router.get('/add_customer', checkAuth,addCustomer);
-router.post('/post_costumer',checkAuth,postCustomer);
+router.get('/data_customer',isLoggedIn,customerPageView );
+router.get('/add_customer', isLoggedIn,addCustomer);
+router.post('/post_costumer',isLoggedIn,postCustomer);
 
-router.get('/detail_customer/:id',checkAuth,detailCustomer);
+router.get('/detail_customer/:id',isLoggedIn,detailCustomer);
 
-router.get('/edit_customer/:id',checkAuth,editCustomer)
-router.put('/edit_customer/:id', checkAuth,postEditCustomer);
+router.get('/edit_customer/:id',isLoggedIn,editCustomer)
+router.put('/edit_customer/:id', isLoggedIn,postEditCustomer);
 
-router.delete('/delete_customer/:id', checkAuth, deleteCustomer);
+router.delete('/delete_customer/:id', isLoggedIn, deleteCustomer);
 
 router.post('/search_customer',searchCustomer)
 

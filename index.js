@@ -4,7 +4,7 @@ const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
 const connectDB = require('./config/db');
-const { checkAuth } = require('./auth/protect');
+const { isLoggedIn } = require('./auth/protect');
 const path = require('path');
 
 
@@ -56,6 +56,8 @@ app.use(
 //   })
 // );
 // Flash Messages
+
+
 app.use(flash({ sessionKeyName: 'flashMessage' }));
 
 app.set('view engine', 'ejs');
@@ -64,11 +66,10 @@ app.use('/', customerRouter);
 app.use('/', bookRouter);
 app.use('/', loginRouter);
 app.use('/', userRouter)
+
+
 // Middleware checkAuth ditempatkan setelah express-session
-app.use(checkAuth);
-
-
-
+app.use(isLoggedIn);
 
 
 

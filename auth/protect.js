@@ -1,16 +1,19 @@
-// auth/protect.js
-const checkAuth = (req, res, next) => {
-  console.log('adminId in session:', req.session.adminId);  // Log nilai adminId sebelum pengalihan
-  console.log('Middleware checkAuth is running.');
-  if (req.session.adminId) {
-      // User is authenticated, proceed to the next middleware or route handler
-      // User is authenticated, redirect to dashboard
-      next();
-  } else {
-      // User is not authenticated, redirect to the login page
-      res.redirect('/login');
-      console.log(req.session.adminId);
-  }
-};
+module.exports = {
+	isLoggedIn : (req, res, next) => {
 
-module.exports = { checkAuth };
+		console.log("user: ", req.session.user_id);
+		if (!req.session.adminId)
+			res.redirect('/login')
+		else
+			next()
+
+	},
+	redirectIfLoggedIn : (req, res, next) => {
+
+		if (req.session.adminId)
+			res.redirect('/dashboardUser')
+		else
+			next()
+
+	}
+}
