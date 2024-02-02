@@ -3,6 +3,8 @@ const express = require('express');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
+const MemoryStore = require('memorystore')(session)
+const cors = require('cors')
 const nocache = require('nocache'); // Import nocache middleware
 const connectDB = require('./config/db');
 const { isLoggedIn } = require('./auth/protect');
@@ -31,7 +33,6 @@ app.use(express.static(__dirname + "/public"));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-
 app.set('trust proxy', true)
 // Express Session
 app.use(
@@ -46,9 +47,14 @@ app.use(
       secure: true,
       httpOnly: false,
       sameSite: 'none'
-    }
+    },
+    store: new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
   })
 );
+
+app.use(cors({ credentials: true, origin: '*' }))
 
 
 
