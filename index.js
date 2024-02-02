@@ -12,10 +12,10 @@ const { isLoggedIn } = require('./auth/protect');
 const path = require('path');
 
 const client = redis.createClient({
-  password: process.env.REDIS_PASS,
+  password: 'EA9C69pV32ICbiGJuUpzeujqt3hT31jt',
   socket: {
-    host: process.env.REDIS_HOST,
-    port: process.env.PORT
+    host: 'redis-19307.c321.us-east-1-2.ec2.cloud.redislabs.com',
+    port: '19307'
   }
 });
 (async () => { await client.connect(); })()
