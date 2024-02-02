@@ -19,6 +19,7 @@ const client = redis.createClient({
   }
 });
 (async () => { await client.connect(); })()
+
 const app = express();
 const PORT = process.env.PORT;
 const customerRouter = require('./router/customer');
@@ -84,9 +85,11 @@ app.set('view engine', 'ejs');
 
 // nocache middleware untuk mencegah caching halaman yang memerlukan otentikasi
 app.use('/', loginRouter);
-app.use('/', dashboardRouter, isLoggedIn, nocache(), (req, res, next) => {
-  next();
-});
+// app.use('/', dashboardRouter, isLoggedIn, nocache(), (req, res, next) => {
+//   next();
+// });
+
+app.use('/', dashboardRouter);
 
 app.use('/', customerRouter);
 app.use('/', bookRouter);
