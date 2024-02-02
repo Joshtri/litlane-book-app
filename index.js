@@ -47,10 +47,11 @@ app.use(
     saveUninitialized: true,
     cookie: {
       maxAge: 360000,  // Waktu kadaluarsa dalam milidetik (6 menit)
-      secure: false,   // Hanya mengirim cookie melalui HTTPS
+      secure: true,   // Hanya mengirim cookie melalui HTTPS
       sameSite: 'none', // Sesuaikan sesuai kebutuhan keamanan
       // Jika Anda menggunakan subdomain, sesuaikan domain sesuai kebutuhan
       // domain: 'yourdomain.com'
+      httpOnly: false
     },
   })
 );
