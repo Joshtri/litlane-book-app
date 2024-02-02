@@ -3,14 +3,22 @@ const express = require('express');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
-const MemoryStore = require('memorystore')(session)
 const cors = require('cors')
+const redis = require('redis')
+const RedisStore = require("connect-redis").default
 const nocache = require('nocache'); // Import nocache middleware
 const connectDB = require('./config/db');
 const { isLoggedIn } = require('./auth/protect');
 const path = require('path');
 
-
+const client = redis.createClient({
+  password: '0nBybwqnRU1lq8On94w4Q4J6sfSmBwG1',
+  socket: {
+    host: 'redis-11408.c295.ap-southeast-1-1.ec2.cloud.redislabs.com',
+    port: 11408
+  }
+});
+(async () => { await client.connect(); })()
 const app = express();
 const PORT = process.env.PORT;
 const customerRouter = require('./router/customer');
@@ -42,15 +50,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     name: 'LitlaneBook',
-    cookie: {
-      maxAge: 360000,  // Waktu kadaluarsa dalam milidetik (6 menit)
-      secure: true,
-      httpOnly: false,
-      sameSite: 'none'
-    },
-    store: new MemoryStore({
-      checkPeriod: 86400000 // prune expired entries every 24h
-    }),
+    store: new RedisStore({ client: client }),
   })
 );
 
