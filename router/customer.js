@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const {dashboardPage, addCustomer, postCustomer, customerPageView, detailCustomer,editCustomer,postEditCustomer, deleteCustomer, searchCustomer} = require('../controllers/customerControllers');
+const { addCustomer, postCustomer, customerPageView, detailCustomer,editCustomer,postEditCustomer, deleteCustomer, searchCustomer} = require('../controllers/customerControllers');
 
 
 const {isLoggedIn} = require('../auth/protect');
 
-router.get('/dashboardUser', isLoggedIn,dashboardPage);
+// router.get('/dashboardUser', isLoggedIn,dashboardPage);
 
 router.get('/data_customer',isLoggedIn,customerPageView );
 router.get('/add_customer', isLoggedIn,addCustomer);
