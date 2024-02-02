@@ -4,7 +4,8 @@ const checkAuth = (req, res, next) => {
   console.log('Middleware checkAuth is running.');
   if (req.session.adminId) {
       // User is authenticated, proceed to the next middleware or route handler
-      next();
+      // next();
+      res.redirect('/dashboardUser')
   } else {
       // User is not authenticated, redirect to the login page
       res.redirect('/login');
