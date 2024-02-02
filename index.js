@@ -29,21 +29,23 @@ app.use(methodOverride('_method'));
 app.use(express.static(__dirname + "/public"));
 
 
-app.use('/uploads',express.static(path.join(__dirname,'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 app.set('trust proxy', 1)
 // Express Session
 app.use(
-    session({
-      secret: 'secret',
-      resave: true,
-      saveUninitialized: true,
-      cookie: {
-        maxAge : 360000,  // Waktu kadaluarsa dalam milidetik (6 menit)
-        secure : true,
-      }
-    })
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 360000,  // Waktu kadaluarsa dalam milidetik (6 menit)
+      secure: true,
+      httpOnly: false,
+      sameSite: 'none'
+    }
+  })
 );
 
 
@@ -74,7 +76,7 @@ app.set('view engine', 'ejs');
 
 // nocache middleware untuk mencegah caching halaman yang memerlukan otentikasi
 app.use('/', loginRouter);
-app.use('/', dashboardRouter ,isLoggedIn, nocache(), (req, res, next) => {
+app.use('/', dashboardRouter, isLoggedIn, nocache(), (req, res, next) => {
   next();
 });
 
@@ -89,7 +91,7 @@ app.use('/', userRouter)
 
 
 
-app.set("views",[
+app.set("views", [
   path.join(__dirname, "/views"),
   path.join(__dirname, "/views/customers"),
   path.join(__dirname, "/views/books"),
@@ -99,6 +101,6 @@ app.set("views",[
 
 
 
-app.listen(PORT,()=>{
-    console.log(`server started at http://localhost:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`server started at http://localhost:${PORT}`);
 });
