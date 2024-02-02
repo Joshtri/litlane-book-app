@@ -42,7 +42,7 @@ app.use('/uploads',express.static(path.join(__dirname,'uploads')));
 app.use(
   session({
     secret: 'secret',
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     cookie: {
       maxAge: 360000,  // Waktu kadaluarsa dalam milidetik (6 menit)
