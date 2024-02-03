@@ -8,6 +8,8 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
@@ -31,9 +33,40 @@
         </div>
     <% }) %>
 
-      <a class="btn btn-sm btn-warning" href="/add_book">
+    <% messageDelete.forEach(element => { %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <%= element %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% }) %>
+
+
+    <nav aria-label="breadcrumb" class="small">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
+        <!-- <li class="breadcrumb-item"><a href="#">Data</a></li> -->
+        <li class="breadcrumb-item active" aria-current="page"><%= locals.title %></li>
+      </ol>
+    </nav>
+    <hr>
+
+    <div class="row ">
+      <div class="col-2">
+        <a class="btn btn-sm btn-warning" href="/add_book">
           Tambah Buku
-      </a>
+        </a>
+      </div>
+
+      <div class="col-10 d-flex justify-content-end">
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
       <div class="table-responsive mt-4">
           <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
@@ -61,17 +94,17 @@
           
                       <div class="d-flex flex-row justify-content-end gap-2">
           
-                        <a href="/detail_book/<%= element._id %>" type="button" class="btn btn-primary btn-small">
-                          <i class="bi bi-eye"></i>
+                        <a href="/detail_bohouseok/<%= element._id %>" type="button" class="btn btn-primary btn-small">
+                          <i class="fa-solid fa-eye small"></i>
                         </a>
           
                         <a href="/edit_book/<%= element._id %>" type="button" class="btn btn-warning btn-small">
-                          <i class="bi bi-pencil"></i>
+                          <i class="fa-regular fa-pen-to-square small"></i>
                         </a>
           
-                        <form action="/delete_customer/<%= element._id %>?_method=DELETE" method="POST" class="position-relative">
-                          <button type="submit" class="btn btn-danger btn-small">
-                            <i class="bi bi-person-x"></i>
+                        <form id="deleteForm" action="/post_delete_book/<%= element._id %>" method="POST" class="position-relative">
+                          <button type="submit" class="btn btn-danger btn-small" onclick="confirmDelete()">
+                            <i class="fa-solid fa-trash-can small"></i>
                           </button>
                         </form>
           
@@ -84,7 +117,35 @@
               </tbody>
           </table>
       </div>
+
+      <nav aria-label="Page navigation example" class="col-12 d-flex justify-content-end">
+        <ul class="pagination ms-auto">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
   </div>
+
+  <script>
+    function confirmDelete() {
+        const confirmation = confirm("Are you sure you want to delete this item?");
+        if (confirmation) {
+            // Submit form if user confirms
+            document.getElementById("deleteForm").submit();
+        }
+    }
+</script>
 
 
   <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>

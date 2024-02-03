@@ -43,6 +43,7 @@ app.use(express.static(__dirname + "/public"));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.set('trust proxy', true)
+
 // Express Session
 app.use(
   session({
@@ -51,7 +52,14 @@ app.use(
     resave: false,
     saveUninitialized: true,
     name: 'LitlaneBook',
-    store: new RedisStore({ client: client }),
+    store: new RedisStore({ 
+      client: client,
+      ttl: 3600, // waktu kadaluwarsa dalam detik (misalnya 1 jam)
+    
+    
+    }),
+  
+    
   })
 );
 

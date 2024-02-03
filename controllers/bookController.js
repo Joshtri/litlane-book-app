@@ -78,16 +78,16 @@ exports.postBook = async (req,res)=>{
         const buildImage = await uploadImage(file, itemData, 'single'); // Sesuaikan 'single' atau 'multiple' sesuai logika Anda
 
         // Mengirim respons dengan informasi yang diinginkan
-        res.send({
-            status: 'SUCCESS',
-            imageName: buildImage,
-            uploadedData: itemData, // Menyertakan variabel data yang diinput untuk MongoDB
-        });
+        // res.send({
+        //     status: 'SUCCESS',
+        //     imageName: buildImage,
+        //     uploadedData: itemData, // Menyertakan variabel data yang diinput untuk MongoDB
+        // });
         // await Book.create(newBook);
         // // res.render('add_customer');
 
-        // await req.flash('info', 'Buku baru telah ditambahkan.');
-        // res.redirect('/data_book'); //back to data_book.
+        await req.flash('info', 'Buku baru telah ditambahkan.');
+        res.redirect('/data_book'); //back to data_book.
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -120,10 +120,14 @@ exports.bookPageView = async (req,res) =>{
 
         const message = await req.flash('info');
         const message_edit = await req.flash('editInfo')
+        const messageDelete = await req.flash('deleteInfo')
+        
+
         res.render('data_book',{
             locals,
             message,
             message_edit,
+            messageDelete,
             books,
             current : page,
             pages: Math.ceil(count / perPage),
@@ -229,32 +233,113 @@ DELETE DATA EDIT BOOK.
 */
 
 
+// exports.postDeleteBook = async (req, res) => {
+//     try {
+
+//         const itemId = req.params.id;
+
+//         // Temukan item berdasarkan ID
+//         const book = await Book.findById(itemId);
+
+//         if (!book) {
+//             return res.status(404).send('Item not found');
+//         }
+
+//         // Dapatkan file ID dan hapus item dari MongoDB
+//         const fileName = book.fileId;
+//         await Book.findOneAndDelete(itemId);
+
+//         // Hapus file dari Firebase Storage
+//         const storageRef = ref(storageFB, fileName);
+//         await deleteObject(storageRef);
+
+//         // await Book.deleteOne({_id:req.params.id});
+//         await req.flash('deleteInfo', 'Data buku berhasil di hapus')
+//         res.redirect('/data_book')
+
+//     } catch (error) {
+//         console.log(error);
+//     }
+// };
+    // try {
+    //     const itemId = req.params.id;
+
+    //     // Temukan item berdasarkan ID
+    //     const book = await Book.findById(itemId);
+
+    //     if (!book) {
+    //         return res.status(404).send('Item tidak ditemukan');
+    //     }
+
+    //     // Dapatkan file ID dan hapus item dari MongoDB
+    //     const fileName = book.fileId;
+    //     await Book.findOneAndDelete({ _id: itemId }); // perbaiki pemanggilan fungsi
+
+    //     // Hapus file dari Firebase Storage
+    //     const storageRef = ref(storageFB, fileName); // tentukan referensi anak di sini
+    //     await deleteObject(storageRef.child(fileName)); // gunakan child untuk referensi anak
+
+    //     await req.flash('deleteInfo', 'Data buku berhasil dihapus');
+    //     res.redirect('/data_book');
+    // } catch (error) {
+    //     console.log(error);
+    //     // Tangani kesalahan dengan benar, seperti mengirim tanggapan kesalahan ke klien
+    //     res.status(500).send('Kesalahan Server Internal');
+    // }
+
+// exports.postDeleteBook = async (req, res) => {
+
+//     try {
+//         const itemId = req.params.id;
+
+//         // Temukan item berdasarkan ID
+//         const item = await Book.findById(itemId);
+
+//         if (!item) {
+//             return res.status(404).send('Item not found');
+//         }
+
+//         // Dapatkan file ID dan hapus item dari MongoDB
+//         const fileName = item.book_cover;
+//         await Book.findOneAndDelete(itemId);
+
+//         // Hapus file dari Firebase Storage
+//         const storageRef = ref(storageFB, fileName);
+//         await deleteObject(storageRef);
+
+
+//         await req.flash('deleteInfo', 'Data buku berhasil dihapus');
+//         res.redirect('/data_book');
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).send('Internal Server Error');
+//     }
+// };
+
 exports.postDeleteBook = async (req, res) => {
     try {
-
         const itemId = req.params.id;
 
         // Temukan item berdasarkan ID
-        const book = await Book.findById(itemId);
+        const item = await Book.findById(itemId);
 
-        if (!book) {
+        if (!item) {
             return res.status(404).send('Item not found');
         }
 
         // Dapatkan file ID dan hapus item dari MongoDB
-        const fileName = book.fileId;
-        await Book.findOneAndDelete(itemId);
+        const fileName = item.book_cover;
+        await Book.findOneAndDelete({ _id: itemId }); // Perbaiki pemanggilan fungsi dengan objek kueri
 
         // Hapus file dari Firebase Storage
         const storageRef = ref(storageFB, fileName);
         await deleteObject(storageRef);
 
-        // await Book.deleteOne({_id:req.params.id});
-        await req.flash('deleteInfo', 'Data buku berhasil di hapus')
-        res.redirect('/data_book')
-
-    } catch (error) {
-        console.log(error);
+        await req.flash('deleteInfo', 'Data buku berhasil dihapus');
+        res.redirect('/data_book');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
     }
 };
 

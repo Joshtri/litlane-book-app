@@ -3,25 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><%= locals.title %></title>
     <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+    <meta name="description" content="<%= locals.description %>">
 </head>
 <body>
+    <!-- <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script> -->
     <!-- start navbar header -->
     <%-include('partials/header'); %>
     <!-- end navbar header -->
 
     <style>
         .custom-avatar {
-        width: 20px; /* Adjust the width as needed */
-        height: 20px; /* Adjust the height as needed */
-        background-color: rgb(45, 118, 196);
-        border-radius: 3px; /* Add border-radius for rounded corners if needed */
-      }
+            width: 20px; /* Adjust the width as needed */
+            height: 20px; /* Adjust the height as needed */
+            background-color: rgb(45, 118, 196);
+            border-radius: 3px; /* Add border-radius for rounded corners if needed */
+        }
+
+        .border-left-primary {
+            border-left: 0.25rem solid #4e73df !important;
+        }
+
+        .border-left-green {
+            border-left: 0.25rem solid #99BC85 !important;
+        }
+
+        .border-left-yellow {
+            border-left: 0.25rem solid #EEC759 !important;
+        }
+
+        .border-left-red {
+            border-left: 0.25rem solid #FD8A8A !important;
+        }
+
+        .hidden{
+            display: none;
+        }
+
     </style>
 
 
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
 
         <div aria-live="polite" aria-atomic="true" class="position-relative">
             <!-- Position it: -->
@@ -59,21 +84,27 @@
             <h5 class=""></h5>
             
             <ul class="list-group list-group-horizontal">
-                <button type="button" id="menu-login" class="list-group-item list-group-item-action active">Ikhtisar Data</button>
-                <button type="button" id="menu-signup" class="list-group-item list-group-item-action">Sign Up</button>
+                <button type="button" id="btn-menu-ikhtisar" class="list-group-item list-group-item-action active">Ikhtisar Data</button>
+                <button type="button" id="btn-menu-music" class="text-center list-group-item list-group-item-action">Music</button>
             </ul>
         </div>
     
-        <div class="row">
+        <div class="row" id="ikhtisar-content-container">
+            
             <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
+            <!-- views/dashboard.ejs -->
+            <div class="col-xl-3 col-md-6 mb-4" id="bookCountCard" hx-get="/getTotalBooks" hx-trigger="load" hx-swap="innerHTML" hx-target="#totalBooks">
+                <div class="card border-left404
+                Not Found-primary shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Jumlah Buku</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                    <a href="/data_book" class="text-decoration-none">
+                                        Jumlah Buku
+                                    </a>
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalBooks">Loading...</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -82,6 +113,10 @@
                     </div>
                 </div>
             </div>
+
+
+
+
     
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -90,8 +125,11 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    jumlah member</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                    <a href="#" class="text-decoration-none">
+                                        jumlah member
+                                    </a>
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -108,8 +146,8 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Earnings (Monthly)</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                    Komentar</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -137,26 +175,97 @@
                 </div>
             </div>
         </div>
+
+        <div id="music-content-container" class="hidden">
+
+            <div class="row">
+                <div class="col-8 ">
+                    <div class="card shadow shadow-sm col-7">
+                        <div class="card-body">
+                            <p class="card-text">
+                                Hai, di hari ini selera lagu apa yang anda ingin dengar?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <iframe class="border-4 rounded rounded-1 shadow shadow-sm" width="100%" height="300" scrolling="yes" frameborder="yes" allow="autoplay"
+                        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/714580602&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+                    <div
+                        style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;">
+                        
+                        <a href="https://soundcloud.com/yourparadis" title="soo" target="_blank"
+                            style="color: #cccccc; text-decoration: none;">soo</a> · <a
+                            href="https://soundcloud.com/yourparadis/sets/jazzhip7c" title="jazzhip 7" target="_blank"
+                            style="color: #cccccc; text-decoration: none;">jazzhip 7</a>\
+                    </div>
+                </div>
+            </div>
+       
+
+        </div>
         
     </div>
-    
-        <script>
+
+
+        
+        
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
-          var toast = new bootstrap.Toast(document.getElementById('notification-toast'), { delay: 10000 });
-          toast.show();
-    
-          var countdownElement = document.getElementById('countdown');
-          var countdown = 10;
-    
-          var countdownInterval = setInterval(function () {
+            var toast = new bootstrap.Toast(document.getElementById('notification-toast'), { delay: 10000 });
+            toast.show();
+
+            var countdownElement = document.getElementById('countdown');
+            var countdown = 10;
+
+            var countdownInterval = setInterval(function () {
             countdown--;
             countdownElement.textContent = countdown;
             if (countdown <= 0) {
-              clearInterval(countdownInterval);
+                clearInterval(countdownInterval);
             }
-          }, 1000);
+            }, 1000);
         });
-      </script>
+    </script>
+
+    <script>
+
+
+        function ShowIkhtisarContent(){
+            document.getElementById('ikhtisar-content-container').classList.remove("hidden");
+            document.getElementById('music-content-container').classList.add("hidden");
+
+
+            // Tambahkan kelas "active" pada tombol music dan hapus kelas "active" dari ikhtisar
+            document.getElementById('btn-menu-ikhtisar').classList.add("active");
+            document.getElementById('btn-menu-music').classList.remove("active")
+        }
+
+        function ShowMusicContent(){
+            document.getElementById('ikhtisar-content-container').classList.add("hidden");
+            document.getElementById('music-content-container').classList.remove("hidden");
+
+
+            // Tambahkan kelas "active" pada tombol music dan hapus kelas "active" dari ikhtisar
+            document.getElementById('btn-menu-ikhtisar').classList.remove("active");
+            document.getElementById('btn-menu-music').classList.add("active")
+        }
+
+
+
+
+        document.addEventListener("DOMContentLoaded", function(){
+            document.getElementById("btn-menu-music").addEventListener("click", function (event) {
+                event.preventDefault();
+                ShowMusicContent();
+            });
+
+            document.getElementById("btn-menu-ikhtisar").addEventListener("click", function (event) {
+                event.preventDefault();
+                ShowIkhtisarContent();
+            });
+        });
+    </script>
 
 
   <!-- Vendor JS Files -->

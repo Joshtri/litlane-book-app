@@ -15,7 +15,7 @@
   <%-include('partials/header'); %>
   <!-- end navbar header -->
 
-    <div class="container">
+    <div class="container mb-4">
       <div class="col py-3">
           <div class="row">
               <div class="col">
@@ -40,7 +40,7 @@
                     <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
                   </div>
                 </div>
-            </div>
+          </div>
       </div>
 
       <div class="row border border-1 border-dark mb-3 pb-3">
@@ -86,7 +86,7 @@
         <div class="col-lg-3 mt-3">
           <label class="form-label" for="">PDF Book</label>
           <input class="form-control" type="text" disabled value="<%= book.book_pdf %>">
-          <div class="form-text" id="basic-addon4">*)Open File</div>
+          <div class="form-text" id="basic-addon4"><a href="<%= book.book_pdf%>" target="_blank">*)Open File</a></div>
           <!-- <img src="https://www.bhmpics.com/downloads/wallpaper-none/2.nothing-4m.jpg" class="img-thumbnail rounded" alt=""> -->
         </div>
 

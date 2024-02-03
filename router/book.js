@@ -16,5 +16,5 @@ router.get('/edit_book/:id',isLoggedIn, editBook); // get view.
 router.put('/post_edit_book/:id', isLoggedIn, postEditBook);
 
 
-router.delete('/post_delete_book/:id',postDeleteBook)
+router.post('/post_delete_book/:id',postDeleteBook)
 module.exports = router;
