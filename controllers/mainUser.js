@@ -7,7 +7,15 @@ const storageFB = getStorage();
 
 //** jangan lupa ubah nama function utk laman utama atau welcome pagenya. */
 exports.mainUserPage = (req,res)=>{
-    res.render('index');
+    const locals = {
+        title : "Litlane Book",
+        description : "Litlane Book - Welcome Page"
+    }
+
+    res.render('index',
+    {
+        locals
+    });
 }
 
 

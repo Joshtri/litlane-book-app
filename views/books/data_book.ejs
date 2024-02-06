@@ -13,6 +13,25 @@
 </head>
 <body>
 
+  <style>
+    /* CSS styles for read-more-link class */
+    .read-more-link {
+      text-decoration: none;
+      color: #007bff; /* Change the color to your preferred link color */
+      font-weight: bold;
+    }
+
+    .read-more-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Additional styles for small class */
+    .read-more-link.small {
+      font-size: 12px;
+    }
+
+  </style>
+
   <!-- start navbar header -->
   <%-include('partials/header'); %>
   <!-- end navbar header -->
@@ -50,22 +69,22 @@
     </nav>
     <hr>
 
-    <div class="row ">
+    <div class="row">
       <div class="col-2">
-        <a class="btn btn-sm btn-warning" href="/add_book">
-          Tambah Buku
+        <a class="btn btn-warning" data-bs-toggle="tooltip" data-bs-title="Add Book" href="/add_book">
+          <i class="fa-solid fa-plus"></i>
         </a>
       </div>
 
       <div class="col-10 d-flex justify-content-end">
         <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-            </div>
-        </div>
+          <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+          </div>
+      </div>
     </div>
-    </div>
+
 
       <div class="table-responsive mt-4">
           <form class="d-flex" role="search">
@@ -87,23 +106,42 @@
               <tbody>
                 <% books.forEach(element => { %>
                   <tr class="align-middle">
-                    <td><%= element.title_book %></td>
+                    <td>
+                      <% 
+                        const maxTitleBook = 35;
+                        const titleBook = element.title_book || "empty title";
+                    
+                        if (titleBook.length > maxTitleBook) {
+                          // If the title is too long, display a truncated version with "read more" link
+                          const truncatedTitle = titleBook.substring(0, maxTitleBook);
+                      %>
+                      
+                      <%= truncatedTitle %>
+                      <a href="#"data-bs-toggle="tooltip" data-bs-title="<%= element.title_book %>"  class="read-more-link small">. . . . </a>
+                    
+                    
+                      <% } else { %>
+                    
+                      <%= titleBook %>
+                    
+                      <% } %>
+                    </td>
                     <td><%= element.author %></td>
                     <td><%= element.publisher %></td>
                     <td class="text-end">
           
                       <div class="d-flex flex-row justify-content-end gap-2">
           
-                        <a href="/detail_bohouseok/<%= element._id %>" type="button" class="btn btn-primary btn-small">
+                        <a href="/detail_book/<%= element._id %>" data-bs-toggle="tooltip" data-bs-title="Detail" type="button" class="btn  btn-primary btn-small">
                           <i class="fa-solid fa-eye small"></i>
                         </a>
           
-                        <a href="/edit_book/<%= element._id %>" type="button" class="btn btn-warning btn-small">
+                        <a href="/edit_book/<%= element._id %>" data-bs-toggle="tooltip" data-bs-title="Edit" type="button" class="btn  btn-warning btn-small">
                           <i class="fa-regular fa-pen-to-square small"></i>
                         </a>
           
                         <form id="deleteForm" action="/post_delete_book/<%= element._id %>" method="POST" class="position-relative">
-                          <button type="submit" class="btn btn-danger btn-small" onclick="confirmDelete()">
+                          <button type="submit" data-bs-toggle="tooltip" data-bs-title="Delete" class="btn btn-danger btn-small" onclick="confirmDelete()">
                             <i class="fa-solid fa-trash-can small"></i>
                           </button>
                         </form>
@@ -117,6 +155,8 @@
               </tbody>
           </table>
       </div>
+
+
 
       <nav aria-label="Page navigation example" class="col-12 d-flex justify-content-end">
         <ul class="pagination ms-auto">
@@ -145,10 +185,16 @@
             document.getElementById("deleteForm").submit();
         }
     }
-</script>
+  </script>
 
-
+  
+  
+  
   <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-    
+  
+  <script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))  
+  </script>
 </body>
 </html>

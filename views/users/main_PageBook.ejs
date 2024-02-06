@@ -104,7 +104,9 @@
                                 // If the paragraph is too long, display a truncated version with "read more" link
                                 const truncatedDescription = bookDescription.substring(0, maxParagraphLength);
                         %>
-                            <%= truncatedDescription %> <a href="<%= '/detail_book' /* replace with the actual link to the book page */ %>" class="read-more-link">Read more...</a>
+                            <%= truncatedDescription %> 
+                            <a href="<%= '/detail_book' /* replace with the actual link to the book page */ %>" class="read-more-link">Read more...</a>
+                            
                         <% } else { %>
                             <%= bookDescription %>
                         <% } %>
@@ -147,5 +149,8 @@
     <footer class="footer">
         footer
     </footer>
+
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+
 </body>
 </html>

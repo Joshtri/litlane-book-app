@@ -9,6 +9,8 @@
     <!-- <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
@@ -25,11 +27,36 @@
       </div>
     <% }) %>
 
-      <a class="btn btn-sm btn-warning" href="/add_customer">
-        Tambah Customer
-      </a>
-      <div class="table-responsive mt-4">
-        
+    <nav aria-label="breadcrumb" class="small">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
+        <!-- <li class="breadcrumb-item"><a href="#">Data</a></li> -->
+        <li class="breadcrumb-item active" aria-current="page"><%= locals.title %></li>
+      </ol>
+    </nav>
+    <hr>
+
+    <div class="row">
+      <div class="col-2">
+        <a class="btn btn-warning" data-bs-toggle="tooltip" data-bs-title="Add Customer" href="/add_customer">
+          <i class="fa-solid fa-plus"></i>
+        </a>
+      </div>
+
+      <div class="col-10 d-flex justify-content-end">
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+          </div>
+        </div>
+      </div>
+      
+
+    </div>
+
+
+      <div class="table-responsive mt-4">    
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
