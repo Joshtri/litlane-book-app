@@ -117,7 +117,7 @@
     </script>
     <script>
         function getComments() {
-            fetch("http://localhost:3005/get_comments")
+            fetch("https://node-app-mongo-db-shpn.vercel.app/get_comments")
             .then(response => response.json())
             .then(result => {
                 var commentSection = document.getElementById("commentSection");
@@ -166,7 +166,7 @@
                 redirect: 'follow'
             };
 
-            fetch("http://localhost:3005/comments", requestOptions)
+            fetch("https://node-app-mongo-db-shpn.vercel.app/comments", requestOptions)
             .then(response => response.text())
             .then(result => {
                 console.log('Comment successfully submitted:', result);
