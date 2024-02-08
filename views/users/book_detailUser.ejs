@@ -3,10 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail - Nama Buku</title>
-    <meta content="description" name="">
+    <title><%= locals.title %></title>
+    <meta content="description" name="<%= locals.description %>">
+
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/mainPagebook.css">
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
 </head>
 <body>
+
+
+    <%-include('partials/header_user'); %>
+    <p class="float-end">beta version</p>
+
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card mt-1 mx-auto" style="width: 13rem;">
+                    <img src="<%= imageUrl %>" class="card-img-top mt-1 img-thumbnail" alt="...">
+                </div>
+            </div>
+            
+            <!-- judul buku -->
+            <div class="col-md-6">
+                <h3 class="ms-2 text-capitalize"><%= book.title_book %></h3>
+                
+                <div class="p-2">
+                    <p class="small">by <%= book.author %> (Author)</p>
+
+
+                    <h6 class="mx-0 mb-3" >Deskripsi Buku</h6>
+                    
+
+                    <div class="card border-0 shadow p-2">
+
+                        <p class="small mt-2" style="text-align: justify;">
+                            <% if (book.book_description && book.book_description.trim() !== '') { %>
+                                <%= book.book_description %>
+                            <% } else { %>
+                                <!-- Tampilkan teks "Kosong" jika deskripsi buku kosong -->
+                                Kosong
+                            <% } %>
+                        </p>
+
+                        <!-- <p class="small mt-2" style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris id quam purus. Donec tincidunt erat id libero sagittis, eget rutrum tortor aliquam. Phasellus id consectetur ligula. Sed vestibulum efficitur ipsum, id tempus justo tincidunt eget. Fusce rhoncus odio eu sollicitudin interdum.</p>
+                        
+                        <p class="small mt-2">
+                            T-bone meatloaf boudin pancetta jowl cupim. Cupim venison shoulder brisket turducken jowl turkey salami alcatra tenderloin t-bone. Shankle chuck corned beef boudin tongue. Rump porchetta pork belly tri-tip. Boudin short loin pork sausage pancetta burgdoggen ground round shankle andouille ham hock biltong leberkas cupim cow. Ham meatball buffalo biltong, pig tongue shoulder cow.
+                        </p> -->
+
+                    </div>
+                </div>
+            </div>
+        
+            <!-- button untuk download  dan baca buku-->
+            <div class="col-md-3">
+                <div class="text-center mt-2">
+                    <a href="<%= book.book_pdf %>" target="_blank" class="btn btn-success btn-sm">Download</a>
+                </div>
+        
+                <div class="text-center mt-2">
+                    <a href="<%= book.book_pdf %>" target="_blank" class="btn btn-success btn-sm">Read Book</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-12">
+                <div class="card border-0 shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">0 Komentar</h5>
+                        <hr>
+                        <!-- Form input komentar -->
+                        <!-- Form input komentar -->
+                        <div id="notificationArea"></div>
+                        <form id="commentForm" method="POST">
+                            <div class="mb-3">
+                                <label for="commentInput" class="form-label">Tambahkan komentar</label>
+                                <textarea class="form-control" id="commentInput" name="comments_text" rows="3"></textarea>
+                            </div>
+
+                            <!-- Input tersembunyi untuk posted_book_id -->
+                            <input type="hidden" id="postedBookId" name="posted_book_id" value="<%= book._id %>">
+
+                            <button type="submit" class="btn btn-primary">Kirim</button>
+                        </form>
+                        <hr>
+
+                        <!-- Daftar komentar -->
+
+
+                        <div id="commentSection">
+                            <!-- Daftar komentar akan ditampilkan di sini -->
+                        </div>
+                        
+                        <!-- Akhir loop komentar -->
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
     
+
+
+    <script>
+        const komentarElement = document.getElementById("id_komentar");
+        const tanggalTeks = komentarElement.textContent;
+        const tanggalObjek = new Date(tanggalTeks);
+        const tanggalFormat = tanggalObjek.toLocaleDateString("id-ID");
+
+        // Tampilkan tanggal yang diformat
+        console.log(tanggalFormat);
+    </script>
+    <script>
+        function getComments() {
+            fetch("http://localhost:3005/get_comments")
+            .then(response => response.json())
+            .then(result => {
+                var commentSection = document.getElementById("commentSection");
+                
+                commentSection.innerHTML = ""; // Kosongkan div komentar sebelum menambahkan yang baru
+                result.forEach(comment => {
+                    commentSection.innerHTML += `
+                    <div class="media mt-3">
+                            <div class="d-flex">
+                                <img src="https://via.placeholder.com/50" class="mr-3 rounded-circle" style="width: 50px; height: 50px;" alt="...">
+                                <div class="media-body ps-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h6 class="mt-0">Anonymous - ${comment.user}</h6>
+                                        <small><sub class="ms-1 text-muted" id="id_komentar" style="font-size: 12px;">${comment.createdAt}</sub></small>
+                                    </div>
+                                    <p>${comment.comments_text}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            })
+            .catch(error => console.log('Error:', error));
+        }
+
+        // Panggil fungsi getComments saat halaman dimuat
+        getComments();
+
+        // Panggil fungsi getComments secara berkala setiap beberapa detik
+        setInterval(getComments, 5000);
+    </script>
+
+    <script>
+        document.getElementById("commentForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Mencegah form dari melakukan submit default
+
+            var postedBookId = document.getElementById("postedBookId").value;
+            var commentText = document.getElementById("commentInput").value; // Mengakses textarea dengan ID commentInput
+
+            var requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ posted_book_id: postedBookId, comments_text: commentText }),
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:3005/comments", requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                console.log('Comment successfully submitted:', result);
+                getComments(); // Panggil fungsi getComments untuk memperbarui daftar komentar setelah komentar baru ditambahkan
+                // Reset textarea setelah berhasil mengirim komentar
+                document.getElementById("commentInput").value = "";
+
+                // Tampilkan notifikasi kirim komentar berhasil
+                var notificationHtml = `
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        Komentar berhasil dikirim!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
+                document.getElementById("notificationArea").innerHTML = notificationHtml;
+
+                // Set timeout untuk menutup notifikasi setelah 5 detik
+                setTimeout(function() {
+                    var notificationArea = document.getElementById("notificationArea");
+                    var alertElement = notificationArea.querySelector(".alert");
+                    alertElement.classList.remove("show");
+                    setTimeout(function() {
+                        notificationArea.innerHTML = ""; // Hapus notifikasi setelah animasi fade out selesai
+                    }, 1000); // Tunggu 1 detik setelah animasi fade out selesai
+                }, 5000); // Set timeout selama 5 detik
+                
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
 </body>
 </html>

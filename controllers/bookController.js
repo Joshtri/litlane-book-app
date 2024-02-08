@@ -149,8 +149,9 @@ exports.detailBook = async (req,res)=>{
         title : "Detail Book",
         description : "",
     }
-    try {
 
+    try {
+        
         const itemId = req.params.id;
         const book = await Book.findById(itemId);
 
