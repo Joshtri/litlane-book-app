@@ -1,5 +1,5 @@
 const faker = require('faker');
-
+const moment = require('moment');
 //models.
 const Book = require('../models/Book');
 const Comment = require('../models/Comment');
@@ -64,6 +64,7 @@ exports.detailBookUser = async (req, res) => {
     try {
         const itemId = req.params.id;
         const book = await Book.findById(itemId);
+        const messageComment = await req.flash('commentInfo');
 
         if (!book) {
             return res.status(404).send('Book not found');
@@ -76,11 +77,16 @@ exports.detailBookUser = async (req, res) => {
         // Mengambil komentar berdasarkan ID buku
         const comments = await Comment.find({ posted_book_id: itemId });
 
+        // Menghitung total komentar berdasarkan ID buku
+        const totalComments = await Comment.countDocuments({ posted_book_id: itemId });
+
         res.render('book_detailUser', {
             locals,
             book,
             imageUrl,
-            comments // Menyertakan komentar dalam data yang akan dirender
+            comments, // Menyertakan komentar dalam data yang akan dirender
+            messageComment,
+            totalComments
         });
     } catch (error) {
         console.log(error);
@@ -106,25 +112,11 @@ exports.createComment = async (req, res) => {
         // Menyimpan komentar baru ke dalam basis data
         const savedComment = await newComment.save();
 
-        // Kirim respon sukses
-        res.status(200).json({ success: true, message: 'Komentar berhasil ditambahkan' });
-
+        await req.flash('commentInfo', 'Komentar berhasil di kirim!')
+        // res.status(201).json(savedComment);
+        res.redirect(`/detail_book/${posted_book_id}`)
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Terjadi kesalahan saat menambahkan komentar' });
     }
 };
-
-// Controller untuk mendapatkan komentar
-exports.getComments = async (req, res) => {
-    try {
-        // Anda dapat mengganti Book dengan nama model yang sesuai
-        const comments = await Comment.find(); // Ambil semua komentar dari basis data
-
-        res.status(200).json(comments); // Kirim respons dengan daftar komentar
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Terjadi kesalahan saat mengambil komentar' });
-    }
-};
-
