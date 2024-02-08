@@ -106,8 +106,8 @@
               <tbody>
                 <% books.forEach(element => { %>
                   <tr class="align-middle">
-                    <td>
-                      <% 
+                    <td class="text-capitalize">
+                      <%
                         const maxTitleBook = 35;
                         const titleBook = element.title_book || "empty title";
                     
@@ -132,7 +132,7 @@
           
                       <div class="d-flex flex-row justify-content-end gap-2">
           
-                        <a href="/detail_book/<%= element._id %>" data-bs-toggle="tooltip" data-bs-title="Detail" type="button" class="btn  btn-primary btn-small">
+                        <a href="/detail_book_adm/<%= element._id %>" data-bs-toggle="tooltip" data-bs-title="Detail" type="button" class="btn  btn-primary btn-small">
                           <i class="fa-solid fa-eye small"></i>
                         </a>
           
@@ -157,24 +157,43 @@
       </div>
 
 
-
-      <nav aria-label="Page navigation example" class="col-12 d-flex justify-content-end">
-        <ul class="pagination ms-auto">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      
+      <!-- Pagination halaman data buku -->
+      <% if (books.length > 0) { %>
+        <nav aria-label="Book Pagination">
+          <ul class="pagination justify-content-center mt-5">
+      
+            <% if (current == 1) { %>
+              <li class="page-item disabled"><a href="#" class="page-link">First</a></li>
+            <% } else { %>
+              <li class="page-item"><a href="/?page=1" class="page-link">First</a></li>
+            <% } %>
+      
+            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+            <% if(i !== 1) { %>
+              <li class="page-item disabled"><a href="#" class="page-link">...</a></li>
+            <% } %>
+      
+            <% for(; i <= (Number(current) + 4) && i <= pages; i++ ) { %>
+              <% if (i == current) { %>
+                <li class="page-item disabled"><a href="#" class="page-link"><%= i %></a></li>
+              <% } else { %>
+                <li class="page-item"><a href="/?page=<%= i %>" class="page-link"><%= i %></a></li>
+              <% } %>
+              <% if (i == Number(current) + 4 && i < pages) { %>
+                <li class="page-item disabled"><a href="#" class="page-link">...</a></li>
+              <% } %>
+            <% } %>
+      
+            <% if (current == pages) { %>
+              <li class="page-item disabled"><a href="#" class="page-link">Last</a></li>
+            <% } else { %>
+              <li class="page-item"><a href="/?page=<%= pages %>" class="page-link">Last</a></li>
+            <% } %>
+      
+          </ul>
+        </nav>
+      <% } %>
   </div>
 
   <script>
@@ -196,5 +215,6 @@
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))  
   </script>
+  
 </body>
 </html>
