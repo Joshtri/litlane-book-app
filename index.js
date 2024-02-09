@@ -92,15 +92,14 @@ app.set('view engine', 'ejs');
 // app.use('/', dashboardRouter);
 
 // nocache middleware untuk mencegah caching halaman yang memerlukan otentikasi
-app.use('/', loginRouter);
+app.use(`/`, loginRouter);
 // app.use('/', dashboardRouter, isLoggedIn, nocache(), (req, res, next) => {
 //   next();
 // });
 
-app.use('/', dashboardRouter);
-
-app.use('/', customerRouter);
-app.use('/', bookRouter);
+app.use(`/${process.env.API_BASE_URL}`, dashboardRouter);
+app.use(`/${process.env.API_BASE_URL}`, customerRouter);
+app.use(`/${process.env.API_BASE_URL}`, bookRouter);
 app.use('/', userRouter)
 
 

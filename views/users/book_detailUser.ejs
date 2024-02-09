@@ -73,7 +73,9 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow">
                     <div class="card-body">
-                        <h5 class="card-title"><%= totalComments %> Komentar</h5>
+
+                        <h5 class="card-title" id="totalComments"><span id="totalCommentsValue">Loading...</span> Komentar</h5>
+
                         <hr>
 
                         <div id="notificationArea"></div>
@@ -87,7 +89,10 @@
                             <!-- Input tersembunyi untuk posted_book_id -->
                             <input type="hidden" id="postedBookId" name="posted_book_id" value="<%= book._id %>">
 
-                            <button type="submit" class="btn btn-primary">Kirim</button>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">Kirim</button>
+                            <div id="loadingIndicator" style="display: none;">Loading...</div>
+                            
+                            
                         </form>
                         <hr>
 
@@ -115,6 +120,7 @@
             </div>
         </div>  
     </div>
+
 
     <script src="/assets/js/commentsData.js"></script>
     <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>

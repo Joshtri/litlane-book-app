@@ -135,7 +135,7 @@ exports.getComments = async (req, res) => {
         // Konversi createdAt ke format tanggal yang diinginkan
         const formattedComments = comments.map(comment => ({
             ...comment.toObject(), // Mengonversi objek mongoose ke objek JavaScript biasa
-            createdAt: moment(comment.createdAt).format('YYYY-MM-DD HH:mm:ss') // Format tanggal
+            createdAt: moment(comment.createdAt).format('HH:mm:ss') // Format tanggal
         }));
 
         res.status(200).json(formattedComments); // Kirim respons dengan daftar komentar yang telah diubah formatnya
@@ -144,3 +144,5 @@ exports.getComments = async (req, res) => {
         res.status(500).json({ message: 'Terjadi kesalahan saat mengambil komentar' });
     }
 };
+
+

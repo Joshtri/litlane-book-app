@@ -6,7 +6,7 @@ function getComments() {
     // const backendURL = `http://localhost:3005/get_comments/${bookId}`;
     const bookId = document.getElementById("bookId").value;
     const backendURL = `https://litlane-book-app.vercel.app/get_comments/${bookId}`;
-    // https://litlane-book-app.vercel.app/
+    //https://litlane-book-app.vercel.app/
     fetch(backendURL) // Gunakan URL backend
     .then(response => response.json())
     .then(result => {
@@ -40,11 +40,64 @@ getComments();
 setInterval(getComments, 5000);
 
 
+// document.getElementById("commentForm").addEventListener("submit", function(event) {
+//     event.preventDefault(); // Mencegah form dari melakukan submit default
+
+//     var postedBookId = document.getElementById("postedBookId").value;
+//     var commentText = document.getElementById("commentInput").value; // Mengakses textarea dengan ID commentInput
+
+//     var requestOptions = {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({ posted_book_id: postedBookId, comments_text: commentText }),
+//         redirect: 'follow'
+//     };
+
+//     fetch("https://litlane-book-app.vercel.app/comments", requestOptions)
+//     .then(response => response.text())
+//     .then(result => {
+//         console.log('Comment successfully submitted:', result);
+//         getComments(); // Panggil fungsi getComments untuk memperbarui daftar komentar setelah komentar baru ditambahkan
+//         // Reset textarea setelah berhasil mengirim komentar
+//         document.getElementById("commentInput").value = "";
+
+//         // Tampilkan notifikasi kirim komentar berhasil
+//         var notificationHtml = `
+//             <div class="alert alert-success alert-dismissible fade show" role="alert">
+//                 Komentar berhasil dikirim!
+//                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+//             </div>
+//         `;
+//         document.getElementById("notificationArea").innerHTML = notificationHtml;
+
+//         // Set timeout untuk menutup notifikasi setelah 5 detik
+//         setTimeout(function() {
+//             var notificationArea = document.getElementById("notificationArea");
+//             var alertElement = notificationArea.querySelector(".alert");
+//             alertElement.classList.remove("show");
+//             setTimeout(function() {
+//                 notificationArea.innerHTML = ""; // Hapus notifikasi setelah animasi fade out selesai
+//             }, 1000); // Tunggu 1 detik setelah animasi fade out selesai
+//         }, 5000); // Set timeout selama 5 detik
+        
+//     })
+//     .catch(error => console.error('Error:', error));
+// });
+
 document.getElementById("commentForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Mencegah form dari melakukan submit default
 
+    var submitBtn = document.getElementById("submitBtn");
+    var loadingIndicator = document.getElementById("loadingIndicator");
+
+    // Tampilkan keterangan loading dan sembunyikan tombol "Kirim"
+    submitBtn.style.display = "none";
+    loadingIndicator.style.display = "block";
+
     var postedBookId = document.getElementById("postedBookId").value;
-    var commentText = document.getElementById("commentInput").value; // Mengakses textarea dengan ID commentInput
+    var commentText = document.getElementById("commentInput").value;
 
     var requestOptions = {
         method: 'POST',
@@ -59,9 +112,12 @@ document.getElementById("commentForm").addEventListener("submit", function(event
     .then(response => response.text())
     .then(result => {
         console.log('Comment successfully submitted:', result);
-        getComments(); // Panggil fungsi getComments untuk memperbarui daftar komentar setelah komentar baru ditambahkan
-        // Reset textarea setelah berhasil mengirim komentar
+        getComments();
         document.getElementById("commentInput").value = "";
+
+        // Sembunyikan keterangan loading dan tampilkan tombol "Kirim" kembali
+        submitBtn.style.display = "block";
+        loadingIndicator.style.display = "none";
 
         // Tampilkan notifikasi kirim komentar berhasil
         var notificationHtml = `
@@ -72,7 +128,6 @@ document.getElementById("commentForm").addEventListener("submit", function(event
         `;
         document.getElementById("notificationArea").innerHTML = notificationHtml;
 
-        // Set timeout untuk menutup notifikasi setelah 5 detik
         setTimeout(function() {
             var notificationArea = document.getElementById("notificationArea");
             var alertElement = notificationArea.querySelector(".alert");
@@ -81,7 +136,32 @@ document.getElementById("commentForm").addEventListener("submit", function(event
                 notificationArea.innerHTML = ""; // Hapus notifikasi setelah animasi fade out selesai
             }, 1000); // Tunggu 1 detik setelah animasi fade out selesai
         }, 5000); // Set timeout selama 5 detik
-        
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+        
+        // Jika terjadi kesalahan, kembalikan tampilan tombol "Kirim"
+        submitBtn.style.display = "block";
+        loadingIndicator.style.display = "none";
+    });
 });
+
+
+
+// Fungsi untuk mendapatkan total komentar secara dinamis
+function getTotalComments() {
+    const bookId = document.getElementById("bookId").value;
+    const postedBookId = bookId; // Ganti dengan posted_book_id yang sesuai
+    fetch(`/get_total_comments/${postedBookId}`)
+        .then(response => response.text())
+        .then(total => {
+            document.getElementById("totalCommentsValue").textContent = total;
+        })
+        .catch(error => console.error('Error fetching total comments:', error));
+}
+
+// Panggil fungsi getTotalComments saat halaman dimuat
+getTotalComments();
+
+// Panggil fungsi getTotalComments secara berkala setiap beberapa detik
+setInterval(getTotalComments, 5000); // Contoh: pembaruan setiap 5 detik
