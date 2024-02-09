@@ -22,8 +22,6 @@
                     <img src="<%= imageUrl %>" class="card-img-top mt-1 img-thumbnail" alt="...">
                 </div>
             </div>
-            <input type="text" id="bookId" value="<%= book._id%>">
-
             
             <!-- judul buku -->
             <div class="col-md-6">
@@ -76,47 +74,71 @@
                         <h5 class="card-title"><%= totalComments %> Komentar</h5>
                         <hr>
 
-                        <div id="notificationArea"></div>
+                        <% messageComment.forEach(element => { %>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                              <%= element %>
+                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        <% }) %>
                         <!-- Form input komentar -->
-                        <form id="commentForm">
+                        <form action="/comments" method="POST">
                             <div class="mb-3">
                                 <label for="commentInput" class="form-label">Tambahkan komentar</label>
                                 <textarea class="form-control" id="commentInput" name="comments_text" rows="3"></textarea>
                             </div>
-
                             <!-- Input tersembunyi untuk posted_book_id -->
-                            <input type="hidden" id="postedBookId" name="posted_book_id" value="<%= book._id %>">
-
+                            <input type="hidden" name="posted_book_id" value="<%= book._id %>">
                             <button type="submit" class="btn btn-primary">Kirim</button>
                         </form>
                         <hr>
 
+                        <!-- Bagian untuk menampilkan komentar -->
                         <div class="row mt-4 justify-content-center">
                             <div class="col-md-12">
                                 <div class="card border-0 shadow">
                                     <div class="card-body">
-                                        <h5 class="card-title"> Komentar</h5>
+                                        <h5 class="card-title">Komentar</h5>
                                         <hr>
-                                        <!-- Form input komentar -->
-                                        <!-- Form input komentar -->
-                
-                                        <!-- Daftar komentar -->
-                                        <div id="commentSection">
-                                            <!-- Daftar komentar akan ditampilkan di sini -->
-                                        </div>
+                                        
+                                        <!-- Looping untuk menampilkan setiap komentar -->
+                                        <% comments.forEach(comment => { %>
+                                            <div class="media mt-3">
+                                                <div class="d-flex">
+                                                    <!-- Pengguna -->
+                                                    <img src="https://via.placeholder.com/50" class="mr-3 rounded-circle" style="width: 50px; height: 50px;" alt="...">
+                                                    <div class="media-body ps-2">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <!-- Nama pengguna -->
+                                                            <h6 class="mt-0">Anonymous - <%= comment.user %></h6>
+                                                            <!-- Waktu terkirim -->
+                                                            <small><sub class="ms-1 text-muted" style="font-size: 12px;"><%= comment.createdAt.toDateString() %></sub></small>
+
+                                                        </div>
+                                                        <!-- Isi komentar -->
+                                                        <p><%= comment.comments_text %></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <% }) %>
                                         
                                         <!-- Akhir loop komentar -->
+
                                     </div>
                                 </div>
                             </div>
-                        </div>                  
+                        </div>
                     </div>
                 </div>
             </div>
         </div>  
+        
+        
     </div>
+    
 
-    <script src="/assets/js/fetchData.js"></script>
+
+
+
     <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
 </body>
 </html>

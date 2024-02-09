@@ -120,3 +120,27 @@ exports.createComment = async (req, res) => {
         res.status(500).json({ message: 'Terjadi kesalahan saat menambahkan komentar' });
     }
 };
+
+exports.getComments = async (req, res) => {
+    try {
+        const bookId = req.params.bookId; // Ambil nilai bookId dari body permintaan
+        // console.log('Received bookId:', bookId); // Cetak nilai bookId ke konsol
+
+        if (!bookId) {
+            return res.status(400).json({ message: 'Book ID is required in the request body' });
+        }
+
+        const comments = await Comment.find({ posted_book_id: bookId }); // Ambil komentar berdasarkan bookId dari basis data
+
+        // Konversi createdAt ke format tanggal yang diinginkan
+        const formattedComments = comments.map(comment => ({
+            ...comment.toObject(), // Mengonversi objek mongoose ke objek JavaScript biasa
+            createdAt: moment(comment.createdAt).format('YYYY-MM-DD HH:mm:ss') // Format tanggal
+        }));
+
+        res.status(200).json(formattedComments); // Kirim respons dengan daftar komentar yang telah diubah formatnya
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat mengambil komentar' });
+    }
+};

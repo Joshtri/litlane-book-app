@@ -1,14 +1,21 @@
-// https://node-app-mongo-db-shpn.vercel.app
 function getComments() {
-fetch("http://localhost:3005/get_comments")
-.then(response => response.json())
-.then(result => {
-    var commentSection = document.getElementById("commentSection");
-    
-    commentSection.innerHTML = ""; // Kosongkan div komentar sebelum menambahkan yang baru
-    result.forEach(comment => {
-        commentSection.innerHTML += `
-        <div class="media mt-3">
+    // Ambil nilai bookId dari elemen HTML
+    // const bookId = "65bdf707dcff6ba9a6404574";
+    // // const bookId = document.getElementById("bookId").value;
+    // // Tentukan URL backend dengan menggunakan bookId
+    // const backendURL = `http://localhost:3005/get_comments/${bookId}`;
+    const bookId = document.getElementById("bookId").value;
+    const backendURL = `http://localhost:3005/get_comments/${bookId}`;
+
+    fetch(backendURL) // Gunakan URL backend
+    .then(response => response.json())
+    .then(result => {
+        var commentSection = document.getElementById("commentSection");
+
+        commentSection.innerHTML = ""; // Kosongkan div komentar sebelum menambahkan yang baru
+        result.forEach(comment => {
+            commentSection.innerHTML += `
+            <div class="media mt-3">
                 <div class="d-flex">
                     <img src="https://via.placeholder.com/50" class="mr-3 rounded-circle" style="width: 50px; height: 50px;" alt="...">
                     <div class="media-body ps-2">
@@ -20,10 +27,10 @@ fetch("http://localhost:3005/get_comments")
                     </div>
                 </div>
             </div>
-        `;
-    });
-})
-.catch(error => console.log('Error:', error));
+            `;
+        });
+    })
+    .catch(error => console.log('Error:', error));
 }
 
 // Panggil fungsi getComments saat halaman dimuat
@@ -31,6 +38,7 @@ getComments();
 
 // Panggil fungsi getComments secara berkala setiap beberapa detik
 setInterval(getComments, 5000);
+
 
 document.getElementById("commentForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Mencegah form dari melakukan submit default
