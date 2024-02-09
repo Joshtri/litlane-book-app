@@ -23,6 +23,10 @@ router.get('/get_total_comments/:posted_book_id', async (req, res) => {
     }
 });
 
+router.get('/about',(_,res)=>{
+    res.render('about_Page');
+});
+
 
 
 
