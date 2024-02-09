@@ -5,8 +5,8 @@ function getComments() {
     // // Tentukan URL backend dengan menggunakan bookId
     // const backendURL = `http://localhost:3005/get_comments/${bookId}`;
     const bookId = document.getElementById("bookId").value;
-    const backendURL = `http://localhost:3005/get_comments/${bookId}`;
-
+    const backendURL = `https://litlane-book-app.vercel.app/get_comments/${bookId}`;
+    // https://litlane-book-app.vercel.app/
     fetch(backendURL) // Gunakan URL backend
     .then(response => response.json())
     .then(result => {
@@ -55,7 +55,7 @@ document.getElementById("commentForm").addEventListener("submit", function(event
         redirect: 'follow'
     };
 
-    fetch("http://localhost:3005/comments", requestOptions)
+    fetch("https://litlane-book-app.vercel.app/comments", requestOptions)
     .then(response => response.text())
     .then(result => {
         console.log('Comment successfully submitted:', result);
