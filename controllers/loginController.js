@@ -47,7 +47,7 @@ exports.postLoginUser = async (req, res) => {
       req.session.username = admin.username;
 
       req.flash('success', 'Login berhasil!');
-      return res.redirect('/dashboardUser');
+      return res.redirect('/mdERQU0pnVpHd08ifQ/adm/dashboardUser');
     } else {
       req.flash('error', 'Username atau password salah.');
       return res.redirect('/login');

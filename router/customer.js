@@ -30,7 +30,7 @@ router.get('/logout', (req, res) => {
             // Handle the error if ne   eded
         } else {
             // Redirect to the login page after destroying the session
-            res.redirect('/login');
+            res.redirect(`/${process.env.API_BASE_URL_LOG}`);
         }
     });
 });

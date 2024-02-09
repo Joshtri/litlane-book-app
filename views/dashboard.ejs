@@ -80,12 +80,14 @@
             </div>
         </div>
     
-        <div class="col-lg-3 mb-4 pb-2 pt-2">
+        <div class="col-lg-4 mb-4 pb-2 pt-2">
             <h5 class=""></h5>
             
             <ul class="list-group list-group-horizontal">
-                <button type="button" id="btn-menu-ikhtisar" class="list-group-item list-group-item-action active">Ikhtisar Data</button>
-                <button type="button" id="btn-menu-music" class="text-center list-group-item list-group-item-action">Music</button>
+                <button type="button" id="btn-menu-ikhtisar" class="list-group-item list-group-item-action active small">Ikhtisar Data</button>
+                <button type="button" id="btn-menu-music" class="text-center list-group-item list-group-item-action small">Music</button>
+
+                <button type="button" id="btn-menu-webMain" class="text-center list-group-item list-group-item-action small">Web User</button>
             </ul>
         </div>
     
@@ -204,6 +206,10 @@
        
 
         </div>
+
+        <div id="webMain-content-container" class="hidden">
+
+        </div>
         
     </div>
 
@@ -230,25 +236,41 @@
 
     <script>
 
-
         function ShowIkhtisarContent(){
             document.getElementById('ikhtisar-content-container').classList.remove("hidden");
             document.getElementById('music-content-container').classList.add("hidden");
+            document.getElementById('webMain-content-container').classList.add("hidden");
 
 
             // Tambahkan kelas "active" pada tombol music dan hapus kelas "active" dari ikhtisar
             document.getElementById('btn-menu-ikhtisar').classList.add("active");
             document.getElementById('btn-menu-music').classList.remove("active")
+            document.getElementById('btn-menu-webMain').classList.remove("active")
         }
 
         function ShowMusicContent(){
             document.getElementById('ikhtisar-content-container').classList.add("hidden");
             document.getElementById('music-content-container').classList.remove("hidden");
+            document.getElementById('webMain-content-container').classList.add("hidden");
 
 
             // Tambahkan kelas "active" pada tombol music dan hapus kelas "active" dari ikhtisar
             document.getElementById('btn-menu-ikhtisar').classList.remove("active");
+            document.getElementById('btn-menu-webMain').classList.remove("active")
             document.getElementById('btn-menu-music').classList.add("active")
+        }
+
+
+        function ShowIkhtisarMainUser(){
+            document.getElementById('ikhtisar-content-container').classList.add("hidden");
+            document.getElementById('music-content-container').classList.add("hidden");
+            document.getElementById('webMain-content-container').classList.remove("hidden");
+
+
+            // Tambahkan kelas "active" pada tombol music dan hapus kelas "active" dari ikhtisar
+            document.getElementById('btn-menu-ikhtisar').classList.remove("active");
+            document.getElementById('btn-menu-webMain').classList.add("active")
+            document.getElementById('btn-menu-music').classList.remove("active")
         }
 
 
@@ -263,6 +285,11 @@
             document.getElementById("btn-menu-ikhtisar").addEventListener("click", function (event) {
                 event.preventDefault();
                 ShowIkhtisarContent();
+            });
+
+            document.getElementById("btn-menu-webMain").addEventListener("click", function (event) {
+                event.preventDefault();
+                ShowIkhtisarMainUser();
             });
         });
     </script>

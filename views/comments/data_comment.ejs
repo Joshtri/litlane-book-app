@@ -17,16 +17,7 @@
   <!-- start navbar header -->
   <%-include('partials/header'); %>
   <!-- end navbar header -->
-
-
   <div class="container mt-4">
-    <% message.forEach(element => { %>
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <%= element %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    <% }) %>
-
     <nav aria-label="breadcrumb" class="small">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
@@ -38,9 +29,9 @@
 
     <div class="row">
       <div class="col-2">
-        <a class="btn btn-warning" data-bs-toggle="tooltip" data-bs-title="Add Customer" href="/add_customer">
+        <!-- <a class="btn btn-warning" data-bs-toggle="tooltip" data-bs-title="Add Customer" href="/add_customer">
           <i class="fa-solid fa-plus"></i>
-        </a>
+        </a> -->
       </div>
 
       <div class="col-10 d-flex justify-content-end">
@@ -66,36 +57,36 @@
           <table class="table table-striped table-sm">
             <thead>
               <tr>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
-                <th scope="col">Email</th>
+                <th scope="col">Nama User</th>
+                <th scope="col">Buku Terkait</th>
+                <th scope="col">Comments</th>
                 <th scope="col" class="text-end">Action</th>
               </tr>
             </thead>
         
             <tbody>
-              <% customers.forEach(element => { %>
+              <% comments.forEach(element => { %>
                 <tr class="align-middle">
-                  <td><%= element.firstName %></td>
-                  <td><%= element.lastName %></td>
-                  <td><%= element.email %></td>
+                  <td><%= element.user %></td>
+                  <td><%= element.book.title_book %></td>
+                  <td><%= element.comments_text %></td>
                   <td class="text-end">
         
                     <div class="d-flex flex-row justify-content-end gap-2">
         
-                      <a href="/mdERQU0pnVpHd08ifQ/adm/detail_customer/<%= element._id %>" data-bs-toggle="tooltip" data-bs-title="Detail" type="button" class="btn btn-primary btn-small">
+                      <a href="#" data-bs-toggle="tooltip" data-bs-title="Detail" type="button" class="btn btn-primary btn-small">
                         <i class="bi bi-eye"></i>
                       </a>
         
-                      <a href="/mdERQU0pnVpHd08ifQ/adm/edit_customer/<%= element._id %>" data-bs-toggle="tooltip" data-bs-title="Edit" type="button" class="btn btn-warning btn-small">
+                      <!-- <a href="/mdERQU0pnVpHd08ifQ/adm/edit_customer/<%= element._id %>" data-bs-toggle="tooltip" data-bs-title="Edit" type="button" class="btn btn-warning btn-small">
                         <i class="bi bi-pencil"></i>
-                      </a>
+                      </a> -->
         
-                      <!-- <form action="/delete_customer/<%= element._id %>?_method=DELETE" method="POST" class="position-relative">
-                        <button type="submit" data-bs-toggle="tooltip" data-bs-title="Delete" class="btn btn-danger btn-small">
+                      <form action="/mdERQU0pnVpHd08ifQ_comments/adm/delete_comment/<%= element._id %>?_method=DELETE" method="POST" class="position-relative">
+                        <button type="submit" data-bs-toggle="tooltip" data-bs-title="Delete" class="btn btn-danger btn-small" onclick="confirmDelete()">
                           <i class="bi bi-person-x"></i>
                         </button>
-                      </form> -->
+                      </form>
         
                     </div>
         
@@ -110,7 +101,7 @@
 
       <!-- Start Pagination number.  -->
       <!-- P.S i got it from raddy wkwk -->
-      <% if (customers.length > 0) { %>
+      <% if (comments.length > 0) { %>
           <nav aria-label="Dashboard Pagination">
             <ul class="pagination justify-content-center mt-5">
         

@@ -26,6 +26,7 @@ const customerRouter = require('./router/customer');
 const bookRouter = require('./router/book');
 const loginRouter = require('./router/login');
 const dashboardRouter = require('./router/dashboard');
+const commentRouter = require('./router/comment');
 
 const userRouter = require('./router/mainUser');
 
@@ -97,9 +98,12 @@ app.use(`/`, loginRouter);
 //   next();
 // });
 
-app.use(`/${process.env.API_BASE_URL}`, dashboardRouter);
-app.use(`/${process.env.API_BASE_URL}`, customerRouter);
-app.use(`/${process.env.API_BASE_URL}`, bookRouter);
+app.use('/mdERQU0pnVpHd08ifQ/adm', dashboardRouter);
+app.use('/mdERQU0pnVpHd08ifQ/adm', customerRouter);
+app.use('/mdERQU0pnVpHd08ifQ/adm', bookRouter);
+app.use('/mdERQU0pnVpHd08ifQ_comments/adm', commentRouter);
+
+// commentRouter
 app.use('/', userRouter)
 
 
@@ -114,6 +118,8 @@ app.set("views", [
   path.join(__dirname, "/views/customers"),
   path.join(__dirname, "/views/books"),
   path.join(__dirname, "/views/users"),
+  path.join(__dirname, "/views/comments"),
+
 ])
 
 

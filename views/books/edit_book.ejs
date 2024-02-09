@@ -35,7 +35,7 @@
             <div class="col">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                  <li class="breadcrumb-item"><a href="/mdERQU0pnVpHd08ifQ/adm/dashboardUser">Dashboard</a></li>
                   <li class="breadcrumb-item active"><%= book.firstName %> <%= book.lastName %></li>
                 </ol>
               </nav>
@@ -85,7 +85,7 @@
             <button type="submit" class="btn btn-primary">Update</button>
         
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" id="deleteButton" data-bs-target="#deleteModal">Delete</button>
-            <a href="/data_book"  class="btn btn-warning">Back</a>
+            <a href="/mdERQU0pnVpHd08ifQ/adm/data_book"  class="btn btn-warning">Back</a>
         
           </div>
         
@@ -108,7 +108,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <form action="/post_delete_book/<%= book._id %>?_method=DELETE" method="POST" class="position-relative">
+                <form action="/mdERQU0pnVpHd08ifQ/adm/post_delete_book/<%= book._id %>?_method=DELETE" method="POST" class="position-relative">
                   <button type="submit" class="btn btn-primary">Yes, Remove Book</button>
                 </form>
               </div>

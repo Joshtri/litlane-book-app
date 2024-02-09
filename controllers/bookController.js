@@ -3,10 +3,12 @@ const mongoose = require('mongoose');
 
 const { upload, uploadMultiple } = require('../middleware/multer')
 
+
 const { getStorage, ref, list, deleteObject ,uploadBytesResumable, getDownloadURL } = require('firebase/storage')
 const { signInWithEmailAndPassword, createUserWithEmailAndPassword } = require("firebase/auth");
 const { auth } = require('../config/firebaseConfig');
 const storageFB = getStorage();
+
 // const path = require('path');
 // const fs = require('fs').promises;
 
