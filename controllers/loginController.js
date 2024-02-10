@@ -50,12 +50,12 @@ exports.postLoginUser = async (req, res) => {
       return res.redirect('/mdERQU0pnVpHd08ifQ/adm/dashboardUser');
     } else {
       req.flash('error', 'Username atau password salah.');
-      return res.redirect('/login');
+      return res.redirect(`/${process.env.API_BASE_URL_LOG}`);
     }
   } catch (error) {
     console.error(error);
     req.flash('error', 'Terjadi kesalahan saat login.');
-    return res.redirect('/login');
+    return res.redirect(`/${process.env.API_BASE_URL_LOG}`);
   }
 };
 
@@ -79,11 +79,11 @@ exports.createAdminAccount = async (req,res)=>{
         //berikan message dengan flash
         await req.flash('info', 'Akun telah dibuat!');
 
-        res.redirect('/login')
+        res.redirect(`/${process.env.API_BASE_URL_LOG}`)
     } catch (error) {
         console.log(error);
         // Handle error appropriately, misalnya, tampilkan pesan kesalahan kepada pengguna
         await req.flash('error', 'Terjadi kesalahan saat membuat akun.');
-        res.redirect('/login'); // Redirect kembali ke halaman pendaftaran jika ada kesalahan
+        res.redirect(`/${process.env.API_BASE_URL_LOG}`); // Redirect kembali ke halaman pendaftaran jika ada kesalahan
     }
 }
