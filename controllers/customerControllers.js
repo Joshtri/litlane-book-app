@@ -96,7 +96,7 @@ exports.postCustomer = async (req,res)=>{
         // res.render('add_customer');
 
         await req.flash('info', 'Kostumer baru telah ditambahkan.');
-        res.redirect('/data_customer'); //back to data_customer.
+        res.redirect('/mdERQU0pnVpHd08ifQ/adm/data_customer'); //back to data_customer.
     } catch (error) {
         console.log(error);
     }
@@ -140,7 +140,7 @@ exports.postEditCustomer = async (req,res)=>{
         }).where(req.params.id);
 
         
-        res.redirect('/data_customer');
+        res.redirect('/mdERQU0pnVpHd08ifQ/adm/data_customer');
     } catch (error) {
         console.log(error);
     }
@@ -152,7 +152,7 @@ exports.deleteCustomer = async(req,res)=>{
 
 
 
-        res.redirect('/data_customer')
+        res.redirect('/mdERQU0pnVpHd08ifQ/adm/data_customer')
 
     } catch (error) {
         console.log(error);

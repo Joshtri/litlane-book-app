@@ -89,7 +89,7 @@ exports.postBook = async (req,res)=>{
         // // res.render('add_customer');
 
         await req.flash('info', 'Buku baru telah ditambahkan.');
-        res.redirect('/data_book'); //back to data_book.
+        res.redirect('/mdERQU0pnVpHd08ifQ/adm/data_book'); //back to data_book.
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -225,7 +225,7 @@ exports.postEditBook = async(req,res)=>{
 
         await req.flash('editInfo', 'Update data buku berhasil !')
 
-        res.redirect('/data_book');
+        res.redirect('/mdERQU0pnVpHd08ifQ/adm/data_book');
     } catch (error) {
         console.log(error);
     }
@@ -339,7 +339,7 @@ exports.postDeleteBook = async (req, res) => {
         await deleteObject(storageRef);
 
         await req.flash('deleteInfo', 'Data buku berhasil dihapus');
-        res.redirect('/data_book');
+        res.redirect('/mdERQU0pnVpHd08ifQ/adm/data_book');
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
