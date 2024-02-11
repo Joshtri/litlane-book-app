@@ -18,7 +18,7 @@ exports.createSubscriptor = async (req, res) => {
 
         await req.flash('SubscribeInfo', 'Subscribe Berhasil :)')
 
-        res.redirect(`/main`)
+        res.redirect('/main')
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Terjadi kesalahan saat menambahkan komentar' });
