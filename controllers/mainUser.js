@@ -45,9 +45,11 @@ exports.mainBookPage = async (req, res) => {
             };
         }));
 
+        const messageSubscribe = await req.flash('SubscribeInfo');
         res.render('main_PageBook', {
             books: dataForTable,
-            locals
+            locals,
+            messageSubscribe
         });
 
     } catch (error) {
