@@ -14,7 +14,7 @@ exports.createSubscriptor = async (req, res) => {
         });
 
         // Menyimpan komentar baru ke dalam basis data
-        await newSubscriptor.save();
+        const fdf = await newSubscriptor.save();
 
         await req.flash('SubscribeInfo', 'Subscribe Berhasil :)')
 

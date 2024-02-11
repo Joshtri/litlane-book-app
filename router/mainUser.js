@@ -1,17 +1,17 @@
 const express = require('express');
-const { mainUserPage, mainBookPage, detailBookUser, createComment, getComments } = require('../controllers/mainUser');
 const Comment = require('../models/Comment');
+const { mainUserPage, mainBookPage, detailBookUser, createComment, getComments } = require('../controllers/mainUser');
 const { createSubscriptor } = require('../controllers/subscriptorController');
 const router = express.Router();
 
 
 
 router.get('/', mainUserPage);
+router.post('/subscribe_website', createSubscriptor);
 router.get('/main',mainBookPage);
 router.get('/detail_book/:id', detailBookUser);
 router.post('/comments', createComment);
 router.get('/get_comments/:bookId', getComments);
-router.post('/subscribe_website', createSubscriptor);
 
 
 router.get('/get_total_comments/:posted_book_id', async (req, res) => {
