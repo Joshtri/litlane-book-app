@@ -45,7 +45,9 @@ const BookSchema = new Schema({
     book_description : {
         type : String,
         required : false
-    }
+    },
+
+    // genre
 
 
     // createdAt : {

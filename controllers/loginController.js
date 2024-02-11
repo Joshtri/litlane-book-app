@@ -46,7 +46,9 @@ exports.postLoginUser = async (req, res) => {
       req.session.userId = userId;
       req.session.username = admin.username;
 
-      req.flash('success', 'Login berhasil!');
+      req.flash('successLogin', 'Selamat anda berhasil login');
+      //berikan message dengan flash
+      await req.flash('infoLanjut', 'Informasi UPDATE sistem dan Tampilan website akan dimulai pada tanggal 22 Februari 2024');
       return res.redirect('/mdERQU0pnVpHd08ifQ/adm/dashboardUser');
     } else {
       req.flash('error', 'Username atau password salah.');

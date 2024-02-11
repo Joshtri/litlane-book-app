@@ -1,7 +1,8 @@
 const Book = require('../models/Book');
+const Comment = require('../models/Comment');
 
 
-exports.dashboardPage = (req, res, next) => {
+exports.dashboardPage = async(req, res, next) => {
   // Check if req.user is defined to avoid TypeError
   if (!req.user) {
     // Handle the case when the user is not authenticated
@@ -19,9 +20,15 @@ exports.dashboardPage = (req, res, next) => {
     userId: userId, // Adding session information to the locals object
     username: username
   };
+  
+
+  const messageINFOupdate = await req.flash('infoLanjut');
+  const messageNotifLogin = await req.flash('successLogin'); 
 
   res.render('dashboard', {
-    locals
+    locals,
+    messageINFOupdate,
+    messageNotifLogin
   });
 };
 
@@ -30,6 +37,16 @@ exports.totalBooksJSON = async (req, res) => {
   try {
       const totalBooks = await Book.countDocuments();
       res.json(totalBooks);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+exports.totalCommentJSON = async (req, res) => {
+  try {
+      const totalComments = await Comment.countDocuments();
+      res.json(totalComments);
   } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
