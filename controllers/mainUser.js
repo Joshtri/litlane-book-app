@@ -2,6 +2,7 @@ const faker = require('faker');
 const moment = require('moment');
 //models.
 const Book = require('../models/Book');
+const Subscriptor = require('../models/Subscriptor');
 const Comment = require('../models/Comment');
 const { getStorage, ref, list, deleteObject ,uploadBytesResumable, getDownloadURL } = require('firebase/storage')
 // const { signInWithEmailAndPassword, createUserWithEmailAndPassword } = require("firebase/auth");
@@ -45,11 +46,11 @@ exports.mainBookPage = async (req, res) => {
             };
         }));
 
-        const messageSubscribe = await req.flash('SubscribeInfo');
+        // const messageSubscribe = await req.flash('SubscribeInfo');
         res.render('main_PageBook', {
             books: dataForTable,
             locals,
-            messageSubscribe
+            // messageSubscribe
         });
 
     } catch (error) {
@@ -148,3 +149,29 @@ exports.getComments = async (req, res) => {
 };
 
 
+
+
+
+
+
+// Controller untuk menambahkan komentar baru
+exports.createSubscriptor = async (req, res) => {
+    try {
+        const { subcribe_mail } = req.body;
+
+        // Membuat komentar baru
+        const newSubscriptor = new Subscriptor({
+            email_subscriptor: subcribe_mail
+        });
+
+        // Menyimpan komentar baru ke dalam basis data
+        const fdf = await newSubscriptor.save();
+
+        await req.flash('SubscribeInfo', 'Subscribe Berhasil :)')
+
+        res.redirect('/main');
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat menambahkan komentar' });
+    }
+};
