@@ -140,7 +140,13 @@ exports.bookPageView = async (req,res) =>{
 }
 
 exports.addBook = async (req,res)=>{
-    res.render('add_book');
+    const locals = {
+        title : "Add Book",
+        description : "",
+    }
+    res.render('add_book',{
+        locals
+    });
 }
 
 
