@@ -67,6 +67,52 @@ exports.mainUserPage = (req,res)=>{
 //     }
 // }
 
+// exports.mainBookPage = async (req, res) => {
+//     const locals = {
+//         title: "Main Page-Book",
+//         description: "Main Page book Litlane Book App"
+//     };
+
+//     try {
+//         // Pagination setup
+//         const itemsPerPage = 6;
+//         const currentPage = parseInt(req.query.page) || 1;
+//         const startIndex = (currentPage - 1) * itemsPerPage;
+
+//         // Fetch books with pagination
+//         const books = await Book.find().skip(startIndex).limit(itemsPerPage);
+
+//         // Fetch total count of books for pagination
+//         const totalCount = await Book.countDocuments();
+
+//         // Menyiapkan data untuk ditampilkan di tabel
+//         const dataForTable = await Promise.all(books.map(async (item) => {
+//             const fileName = item.book_cover;
+//             const storageRef = ref(storageFB, fileName);
+//             const imageUrl = await getDownloadURL(storageRef);
+
+//             return {
+//                 ...item.toObject(),
+//                 imageUrl,
+//             };
+//         }));
+
+//         // Calculate total pages for pagination
+//         const totalPages = Math.ceil(totalCount / itemsPerPage);
+
+//         res.render('main_PageBook', {
+//             books: dataForTable,
+//             locals,
+//             currentPage,
+//             totalPages
+//         });
+
+//     } catch (error) {
+//         console.error("Error fetching books:", error);
+//         res.status(500).send("Internal server error.");
+//     }
+// };
+
 exports.mainBookPage = async (req, res) => {
     const locals = {
         title: "Main Page-Book",
@@ -80,19 +126,21 @@ exports.mainBookPage = async (req, res) => {
         const startIndex = (currentPage - 1) * itemsPerPage;
 
         // Fetch books with pagination
-        const books = await Book.find().skip(startIndex).limit(itemsPerPage);
+        const booksPromise = Book.find().skip(startIndex).limit(itemsPerPage).lean().exec();
 
         // Fetch total count of books for pagination
-        const totalCount = await Book.countDocuments();
+        const totalCountPromise = Book.countDocuments();
 
         // Menyiapkan data untuk ditampilkan di tabel
+        const [books, totalCount] = await Promise.all([booksPromise, totalCountPromise]);
+
         const dataForTable = await Promise.all(books.map(async (item) => {
             const fileName = item.book_cover;
             const storageRef = ref(storageFB, fileName);
             const imageUrl = await getDownloadURL(storageRef);
 
             return {
-                ...item.toObject(),
+                ...item,  // Menggunakan lean() untuk mengembalikan dokumen mentah
                 imageUrl,
             };
         }));
@@ -112,6 +160,7 @@ exports.mainBookPage = async (req, res) => {
         res.status(500).send("Internal server error.");
     }
 };
+
 
 
 // exports.mainBookPage = async (req, res) => {
