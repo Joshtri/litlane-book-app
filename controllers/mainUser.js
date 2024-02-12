@@ -5,6 +5,9 @@ const Comment = require('../models/Comment');
 
 const faker = require('faker');
 const moment = require('moment');
+const { promisify } = require('util');
+
+const sleep = promisify(setTimeout); // Fungsi untuk menunggu sejumlah waktu
 const { getStorage, ref, list, deleteObject ,uploadBytesResumable, getDownloadURL } = require('firebase/storage')
 // const { signInWithEmailAndPassword, createUserWithEmailAndPassword } = require("firebase/auth");
 const { auth } = require('../config/firebaseConfig');
@@ -66,12 +69,24 @@ exports.mainBookPage = async (req, res) => {
     }
 
     try {
-        const timeoutInMinutes = 5;
-        const timeoutInMilliseconds = timeoutInMinutes * 60 * 1000; // Konversi menit ke milidetik
-        const booksPromise = Book.find().timeout(timeoutInMilliseconds); // Menambahkan timeout maksimum untuk permintaan ke database (dalam milidetik)
+        // Melakukan query ke database
+        const booksPromise = Book.find();
+
+        // Menetapkan batas waktu maksimum (misalnya, 5 detik)
+        const timeoutInMilliseconds = 50000; // 5 detik
+        const timeoutError = new Error('Query timeout');
+        const timeout = setTimeout(() => {
+            timeoutError.code = 'REQUEST_TIMEOUT';
+            throw timeoutError; // Melemparkan error jika waktu habis
+        }, timeoutInMilliseconds);
+
+        // Menunggu hasil query atau timeout (yang tercapai lebih dulu)
         const books = await booksPromise;
 
-        // Menyiapkan data untuk ditampilkan di tabel
+        // Menghapus timeout jika query selesai dalam waktu yang ditetapkan
+        clearTimeout(timeout);
+
+        // Melanjutkan dengan pemrosesan hasil query
         const dataForTable = await Promise.all(books.map(async (item) => {
             const fileName = item.book_cover;
             const storageRef = ref(storageFB, fileName);
@@ -83,22 +98,23 @@ exports.mainBookPage = async (req, res) => {
             };
         }));
 
+        // Mengirimkan respons ke klien
         res.render('main_PageBook', {
             books: dataForTable,
             locals,
         });
 
     } catch (error) {
+        // Tangani kesalahan
         console.log(error);
-        if (error.name === 'TimeoutError') {
-            // Tanggapan jika permintaan ke database melampaui waktu maksimum
+        if (error.code === 'REQUEST_TIMEOUT') {
             res.status(504).send('Request timeout. Please try again later.');
         } else {
-            // Tanggapan untuk kesalahan lain
             res.status(500).send('Internal server error.');
         }
     }
 }
+
 
 
 exports.detailBookUser = async (req, res) => {

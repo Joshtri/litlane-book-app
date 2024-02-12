@@ -29,6 +29,7 @@
     "nocache": "^4.0.0",
     "path": "^0.12.7",
     "redis": "^4.6.12",
+    "util": "^0.12.5",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
