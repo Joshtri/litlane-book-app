@@ -90,8 +90,8 @@
 
         <% if (books.length > itemsPerPage) { %>
             <!-- Jika ada lebih dari 6 data, tampilkan navigasi halaman berikutnya -->
-            <nav>
-                <ul class="pagination">
+            <nav class="">
+                <ul class="pagination justify-content-center mt-4">
                     <% for(let page = 1; page <= totalPages; page++) { %>
                         <li class="page-item <%= current === page ? 'active' : '' %>">
                             <a class="page-link" href="?page=<%= page %>"><%= page %></a>
