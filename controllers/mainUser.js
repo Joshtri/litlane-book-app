@@ -98,10 +98,14 @@ exports.mainBookPage = async (req, res) => {
             };
         }));
 
+                // Calculate current page number
+                const currentPage = req.query.page || 1;
+
         // Mengirimkan respons ke klien
         res.render('main_PageBook', {
             books: dataForTable,
             locals,
+            current: currentPage 
         });
 
     } catch (error) {

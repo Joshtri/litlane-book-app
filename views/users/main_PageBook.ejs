@@ -46,7 +46,9 @@
         </nav>
 
 
-        <% for(let i=0; i<books.length; i++) { %>
+        <% const itemsPerPage = 6; %>
+        <% const totalPages = Math.ceil(books.length / itemsPerPage); %>
+        <% for(let i = 0; i < Math.min(books.length, itemsPerPage); i++) { %>
         <div class="card mx-3 mt-3 col-sm-3" style="width: 16rem;">
             <img src="<%= books[i].imageUrl  %>" class="card-img-top mt-1 img-thumbnail" alt="...">
             <div class="card-body">
@@ -84,6 +86,19 @@
             </div>
         </div>
 
+        <% } %>
+
+        <% if (books.length > itemsPerPage) { %>
+            <!-- Jika ada lebih dari 6 data, tampilkan navigasi halaman berikutnya -->
+            <nav>
+                <ul class="pagination">
+                    <% for(let page = 1; page <= totalPages; page++) { %>
+                        <li class="page-item <%= current === page ? 'active' : '' %>">
+                            <a class="page-link" href="?page=<%= page %>"><%= page %></a>
+                        </li>
+                    <% } %>
+                </ul>
+            </nav>
         <% } %>
     </div>
 
