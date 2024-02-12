@@ -7,8 +7,8 @@ const router = express.Router();
 
 
 router.get('/', mainUserPage);
-router.get('/main',mainBookPage);
-router.post('/subscribe_website', createSubscriptor);
+router.get('/mainBook',mainBookPage);
+// router.post('/subscribe_website', createSubscriptor);
 router.get('/detail_book/:id', detailBookUser);
 router.post('/comments', createComment);
 router.get('/get_comments/:bookId', getComments);
