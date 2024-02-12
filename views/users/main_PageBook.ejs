@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= locals.title %></title>
-    <link rel="icon" href="/assets/favicon.ico" />
+    <!-- <link rel="icon" href="/assets/favicon.ico" /> -->
     <meta content="description" name="<%= locals.description %>">
     <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/mainPagebook.css">
@@ -18,12 +18,6 @@
 
     
     <div class="container-lg mt-3 mb-4">
-
-
-        <!-- <div class="row mb-5">
-
-        </div> -->
-
 
         <div class="row justify-content-center">
 
@@ -53,7 +47,7 @@
 
 
             <% for(let i=0; i<books.length; i++) { %>
-            <div class="card mx-3 mt-3" style="width: 19rem;">
+            <div class="card mx-3 mt-3 col-sm-3">
                 <img src="<%= books[i].imageUrl  %>" class="card-img-top mt-1 img-thumbnail" alt="...">
                 <div class="card-body">
                     <h5 class="card-title text-capitalize"><%= books[i].title_book %></h5>
@@ -98,7 +92,19 @@
     </div>
     
     <!-- Footer -->
-    <%-include('partials/footer_user'); %>
+    <footer class="bg-dark text-light py-3 mt-auto">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p>© 2024 LitLane Book. All rights reserved.</p>
+            </div>
+            <div class="col-md-6">
+                <!-- Form untuk mengirim email -->
+            
+            </div>
+        </div>
+    </div>
+</footer>
     <!-- end Footer -->
 
     <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
