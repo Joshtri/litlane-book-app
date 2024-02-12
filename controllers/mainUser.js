@@ -25,15 +25,51 @@ exports.mainUserPage = (req,res)=>{
 }
 
 
-exports.mainBookPage = async (req, res) => {
+// exports.mainBookPage = async (req, res) => {
 
+//     const locals = {
+//         title : "Main Page-Book",
+//         description : "Main Page book Litlane Book App"
+//     }
+
+//     try {
+//         const books = await Book.find();
+
+//         // Menyiapkan data untuk ditampilkan di tabel
+//         const dataForTable = await Promise.all(books.map(async (item) => {
+//             const fileName = item.book_cover;
+//             const storageRef = ref(storageFB, fileName);
+//             const imageUrl = await getDownloadURL(storageRef);
+
+//             return {
+//                 ...item.toObject(),  // Spread operator untuk menyertakan semua properti dari objek buku
+//                 imageUrl,
+//             };
+//         }));
+
+//         // const messageSubscribe = await req.flash('SubscribeInfo');
+//         res.render('main_PageBook', {
+//             books: dataForTable,
+//             locals,
+//             // messageSubscribe
+//         });
+
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+exports.mainBookPage = async (req, res) => {
     const locals = {
-        title : "Main Page-Book",
-        description : "Main Page book Litlane Book App"
+        title: "Main Page-Book",
+        description: "Main Page book Litlane Book App"
     }
 
     try {
-        const books = await Book.find();
+        const timeoutInMinutes = 5;
+        const timeoutInMilliseconds = timeoutInMinutes * 60 * 1000; // Konversi menit ke milidetik
+        const booksPromise = Book.find().timeout(timeoutInMilliseconds); // Menambahkan timeout maksimum untuk permintaan ke database (dalam milidetik)
+        const books = await booksPromise;
 
         // Menyiapkan data untuk ditampilkan di tabel
         const dataForTable = await Promise.all(books.map(async (item) => {
@@ -47,17 +83,23 @@ exports.mainBookPage = async (req, res) => {
             };
         }));
 
-        // const messageSubscribe = await req.flash('SubscribeInfo');
         res.render('main_PageBook', {
             books: dataForTable,
             locals,
-            // messageSubscribe
         });
 
     } catch (error) {
         console.log(error);
+        if (error.name === 'TimeoutError') {
+            // Tanggapan jika permintaan ke database melampaui waktu maksimum
+            res.status(504).send('Request timeout. Please try again later.');
+        } else {
+            // Tanggapan untuk kesalahan lain
+            res.status(500).send('Internal server error.');
+        }
     }
 }
+
 
 exports.detailBookUser = async (req, res) => {
     const locals = {
