@@ -5,7 +5,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const cors = require('cors')
 const redis = require('redis')
-const RedisStore = require("connect-redis").default
+const RedisStore = require("connect-redis");
 const nocache = require('nocache'); // Import nocache middleware
 const connectDB = require('./config/db');
 const { isLoggedIn } = require('./auth/protect');
@@ -18,7 +18,8 @@ const client = redis.createClient({
     port: process.env.REDIS_PORT,
   }
 });
-(async () => { await client.connect(); })()
+
+// (async () => { await client.connect(); })()
 
 const app = express();
 const PORT = process.env.PORT;
