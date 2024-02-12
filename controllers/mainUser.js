@@ -50,10 +50,15 @@ exports.mainUserPage = (req,res)=>{
 //             };
 //         }));
 
+//         // Calculate current page number
+//         const currentPage = req.query.page || 1;
+
+
 //         // const messageSubscribe = await req.flash('SubscribeInfo');
 //         res.render('main_PageBook', {
 //             books: dataForTable,
 //             locals,
+//             current: currentPage 
 //             // messageSubscribe
 //         });
 
@@ -66,58 +71,105 @@ exports.mainBookPage = async (req, res) => {
     const locals = {
         title: "Main Page-Book",
         description: "Main Page book Litlane Book App"
-    }
+    };
 
     try {
-        // Melakukan query ke database
-        const booksPromise = Book.find();
+        // Pagination setup
+        const itemsPerPage = 6;
+        const currentPage = parseInt(req.query.page) || 1;
+        const startIndex = (currentPage - 1) * itemsPerPage;
 
-        // Menetapkan batas waktu maksimum (misalnya, 5 detik)
-        const timeoutInMilliseconds = 50000; // 5 detik
-        const timeoutError = new Error('Query timeout');
-        const timeout = setTimeout(() => {
-            timeoutError.code = 'REQUEST_TIMEOUT';
-            throw timeoutError; // Melemparkan error jika waktu habis
-        }, timeoutInMilliseconds);
+        // Fetch books with pagination
+        const books = await Book.find().skip(startIndex).limit(itemsPerPage);
 
-        // Menunggu hasil query atau timeout (yang tercapai lebih dulu)
-        const books = await booksPromise;
+        // Fetch total count of books for pagination
+        const totalCount = await Book.countDocuments();
 
-        // Menghapus timeout jika query selesai dalam waktu yang ditetapkan
-        clearTimeout(timeout);
-
-        // Melanjutkan dengan pemrosesan hasil query
+        // Menyiapkan data untuk ditampilkan di tabel
         const dataForTable = await Promise.all(books.map(async (item) => {
             const fileName = item.book_cover;
             const storageRef = ref(storageFB, fileName);
             const imageUrl = await getDownloadURL(storageRef);
 
             return {
-                ...item.toObject(),  // Spread operator untuk menyertakan semua properti dari objek buku
+                ...item.toObject(),
                 imageUrl,
             };
         }));
 
-                // Calculate current page number
-                const currentPage = req.query.page || 1;
+        // Calculate total pages for pagination
+        const totalPages = Math.ceil(totalCount / itemsPerPage);
 
-        // Mengirimkan respons ke klien
         res.render('main_PageBook', {
             books: dataForTable,
             locals,
-            current: currentPage 
+            currentPage,
+            totalPages
         });
 
     } catch (error) {
-        // Tangani kesalahan
-        console.log(error);
-        if (error.code === 'REQUEST_TIMEOUT') {
-            res.status(504).send('Request timeout. Please try again later.');
-        } else {
-            res.status(500).send('Internal server error.');
-        }
+        console.error("Error fetching books:", error);
+        res.status(500).send("Internal server error.");
     }
-}
+};
+
+
+// exports.mainBookPage = async (req, res) => {
+//     const locals = {
+//         title: "Main Page-Book",
+//         description: "Main Page book Litlane Book App"
+//     }
+
+//     try {
+//         // Melakukan query ke database
+//         const booksPromise = Book.find();
+
+//         // Menetapkan batas waktu maksimum (misalnya, 5 detik)
+//         const timeoutInMilliseconds = 50000; // 5 detik
+//         const timeoutError = new Error('Query timeout');
+//         const timeout = setTimeout(() => {
+//             timeoutError.code = 'REQUEST_TIMEOUT';
+//             throw timeoutError; // Melemparkan error jika waktu habis
+//         }, timeoutInMilliseconds);
+
+//         // Menunggu hasil query atau timeout (yang tercapai lebih dulu)
+//         const books = await booksPromise;
+
+//         // Menghapus timeout jika query selesai dalam waktu yang ditetapkan
+//         clearTimeout(timeout);
+
+//         // Melanjutkan dengan pemrosesan hasil query
+//         const dataForTable = await Promise.all(books.map(async (item) => {
+//             const fileName = item.book_cover;
+//             const storageRef = ref(storageFB, fileName);
+//             const imageUrl = await getDownloadURL(storageRef);
+
+//             return {
+//                 ...item.toObject(),  // Spread operator untuk menyertakan semua properti dari objek buku
+//                 imageUrl,
+//             };
+//         }));
+
+//                 // Calculate current page number
+//                 const currentPage = req.query.page || 1;
+
+//         // Mengirimkan respons ke klien
+//         res.render('main_PageBook', {
+//             books: dataForTable,
+//             locals,
+//             current: currentPage 
+//         });
+
+//     } catch (error) {
+//         // Tangani kesalahan
+//         console.log(error);
+//         if (error.code === 'REQUEST_TIMEOUT') {
+//             res.status(504).send('Request timeout. Please try again later.');
+//         } else {
+//             res.status(500).send('Internal server error.');
+//         }
+//     }
+// }
 
 
 
