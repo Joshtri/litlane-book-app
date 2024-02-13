@@ -121,7 +121,7 @@ exports.mainBookPage = async (req, res) => {
 
     try {
         // Pagination setup
-        const itemsPerPage = 6;
+        const itemsPerPage = 5  ;
         const currentPage = parseInt(req.query.page) || 1;
         const startIndex = (currentPage - 1) * itemsPerPage;
 
