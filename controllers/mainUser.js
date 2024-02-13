@@ -145,6 +145,7 @@ exports.mainBookPage = async (req, res) => {
             };
         }));
 
+        const messageSubscribe = await req.flash('SubscribeInfo')
         // Calculate total pages for pagination
         const totalPages = Math.ceil(totalCount / itemsPerPage);
 
@@ -152,7 +153,8 @@ exports.mainBookPage = async (req, res) => {
             books: dataForTable,
             locals,
             currentPage,
-            totalPages
+            totalPages,
+            messageSubscribe
         });
 
     } catch (error) {
@@ -333,7 +335,7 @@ exports.createSubscriptor = async (req, res) => {
 
         await req.flash('SubscribeInfo', 'Subscribe Berhasil :)')
 
-        res.redirect('/main');
+        res.redirect('/mainBook');
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Terjadi kesalahan saat menambahkan komentar' });

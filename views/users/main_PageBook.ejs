@@ -19,7 +19,12 @@
     <!-- Main Content -->
     <div class="container">
         <div class="row mx-auto justify-content-center">
-
+            <% messageSubscribe.forEach(element => { %>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <%= element %>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% }) %>
             <div class="card-title fs-3 mb-2 text-uppercase text-center">
                 Books
             </div>
