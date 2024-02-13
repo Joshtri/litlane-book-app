@@ -30,15 +30,16 @@
             </div>
     
             <nav class="nav nav-pills mt-1 nav-fill">
-                <div class="card mx-auto">
+                <div class="card mx-auto shadow border-0">
                     <div class="card-body d-flex">
                         <a class="nav-link active" aria-current="page" href="#">Programming</a>
                         <a class="nav-link" href="#">Physic</a>
-                        <a class="nav-link" href="#">Novel</a>
-                        <a class="nav-link disabled" aria-disabled="true">Other</a>
+                        <!-- <a class="nav-link" href="#">Novel</a>
+                        <a class="nav-link disabled" aria-disabled="true">Other</a> -->
                     </div>
                 </div>
             </nav>
+
             <% books.forEach(book => { %>
                 <div class="card mx-3 mt-3 col-sm-3" style="width: 16rem;">
                     <img src="<%= book.imageUrl %>" class="card-img-top mt-1 img-thumbnail" alt="...">
