@@ -8,7 +8,7 @@ const isLoggedIn = (req, res, next) => {
     return next();
   } else {
     req.flash('error', 'Anda harus login untuk mengakses halaman ini.');
-    return res.redirect(`/${process.env.API_BASE_URL_LOG}`);
+    return res.redirect(`/}`);
   }
 };
 
