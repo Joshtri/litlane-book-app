@@ -2,6 +2,7 @@
 const Book = require('../models/Book');
 const Subscriptor = require('../models/Subscriptor');
 const Comment = require('../models/Comment');
+const BookRequest = require('../models/BookRequest');
 
 const faker = require('faker');
 const moment = require('moment');
@@ -146,6 +147,7 @@ exports.mainBookPage = async (req, res) => {
         }));
 
         const messageSubscribe = await req.flash('SubscribeInfo')
+        const messageBookReq = await req.flash('bookReqInfo');
         // Calculate total pages for pagination
         const totalPages = Math.ceil(totalCount / itemsPerPage);
 
@@ -154,7 +156,8 @@ exports.mainBookPage = async (req, res) => {
             locals,
             currentPage,
             totalPages,
-            messageSubscribe
+            messageSubscribe,
+            messageBookReq
         });
 
     } catch (error) {
@@ -341,3 +344,26 @@ exports.createSubscriptor = async (req, res) => {
         res.status(500).json({ message: 'Terjadi kesalahan saat menambahkan komentar' });
     }
 };
+
+
+exports.postBookRequest = async (req,res)=>{
+    try {
+
+        const {book_req, email_user} = req.body;
+
+        const newBookReq = new BookRequest({
+            book_req : book_req,
+            email_user : email_user
+        })
+
+        // Menyimpan komentar baru ke dalam basis data
+        const fdf = await newBookReq.save();
+
+        await req.flash('bookReqInfo', 'Permintaan E-Book telah terkirim');
+        res.redirect('/mainBook');
+        
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat menambahkan komentar' });
+    }
+}

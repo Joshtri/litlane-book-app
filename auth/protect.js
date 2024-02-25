@@ -8,7 +8,7 @@ const isLoggedIn = (req, res, next) => {
     return next();
   } else {
     req.flash('error', 'Anda harus login untuk mengakses halaman ini.');
-    return res.redirect(`/}`);
+    return res.redirect(`/`);
   }
 };
 
