@@ -139,7 +139,7 @@
                         <p class="card-text small"><%= book.publisher %></p>
                         <p class="card-text small">
                             <% 
-                                const maxParagraphLength = 200;
+                                -const maxParagraphLength = 200;
                                 const bookDescription = book.book_description || "";
                                 if (bookDescription.length > maxParagraphLength) {
                                     const truncatedDescription = bookDescription.substring(0, maxParagraphLength);
