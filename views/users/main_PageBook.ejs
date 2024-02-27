@@ -120,14 +120,21 @@
                     </form>
                 </div>
             </div>
-            
-            
+
+            <style>
+                .card-img-top {
+                    width: 100%; /* Mengisi lebar card */
+                    height: 200px; /* Menentukan tinggi gambar */
+                    object-fit: contain; /* Menjaga aspek rasio dan memotong gambar sesuai area */
+                }
+            </style>
+                    
 
             <% books.forEach(book => { %>
                 <div class="card mx-3 border-0 shadow-sm mt-3 col-sm-3" style="width: 16rem;">
                     <img src="<%= book.imageUrl %>" class="card-img-top mt-1" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title text-capitalize"><%= book.title_book %></h5>
+                        <h6 class="card-title text-capitalize"><%= book.title_book %></h6>
                         <hr>
                         <p class="card-text small"><%= book.publisher %></p>
                         <p class="card-text small">
