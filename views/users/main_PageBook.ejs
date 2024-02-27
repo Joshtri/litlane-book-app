@@ -163,11 +163,6 @@
         </div>
         <hr>
 
-        
-        <!-- Form permintaan ✨ -->
-        <%-include('partials/form_permintaan'); %>
-
-
         <!-- Pagination -->
         <% if (totalPages > 1) { %>
             <nav>
@@ -182,6 +177,9 @@
         <% } %>
     </div>
 
+    <!-- Form permintaan ✨ -->
+        <%-include('partials/form_permintaan'); %>
+    <!-- END FORM PERMINTAAN ->
     <!-- Footer -->
     <%-include('partials/footer_user'); %>
     <!-- end Footer -->
