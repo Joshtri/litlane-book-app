@@ -1,0 +1,21 @@
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <h2 class="text-uppercase fw-bold" style="font-family: 'Roboto';">permintaan</h2>
+        
+        <p>Kami menyediakan fitur request/permintaan apabila sobat ingin mendapatkan E-Book yang diinginkan maka kami akan mengunggah E-Book terbaru sesuai permintaan✨</p>
+
+        <form id="requestForm" action="/book_request" method="POST">
+            <div class="mb-3 col-lg-5">
+                <label for="book_req" class="form-label">E-Book yang diinginkan:</label>
+                <input type="text" class="form-control" id="book_req" name="book_req" placeholder="E-Book yang diinginkan" required>
+            </div>
+
+            <div class="mb-3 col-lg-5">
+                <label for="email" class="form-label">Email (untuk mengabari E-Book sudah di unggah):</label>
+                <input type="email" class="form-control" id="email" name="email_user" placeholder="Isi email anda" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" >Kirim</button>
+        </form>
+    </div>
+</div>
