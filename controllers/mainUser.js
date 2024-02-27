@@ -122,14 +122,12 @@ exports.mainBookPage = async (req, res) => {
 
     try {
         // Pagination setup
-        const itemsPerPage = 5;
+        const itemsPerPage = 5  ;
         const currentPage = parseInt(req.query.page) || 1;
         const startIndex = (currentPage - 1) * itemsPerPage;
 
         // Fetch books with pagination
-        // const booksPromise = Book.find().sort({ createdAt: -1 }).skip(startIndex).limit(itemsPerPage).lean().exec();
-        
-        const booksPromise = Book.find().skip(startIndex).limit(itemsPerPage).lean().exec();   
+        const booksPromise = Book.find().skip(startIndex).limit(itemsPerPage).lean().exec();
 
         // Fetch total count of books for pagination
         const totalCountPromise = Book.countDocuments();
@@ -148,7 +146,7 @@ exports.mainBookPage = async (req, res) => {
             };
         }));
 
-        const messageSubscribe = await req.flash('SubscribeInfo');
+        const messageSubscribe = await req.flash('SubscribeInfo')
         const messageBookReq = await req.flash('bookReqInfo');
         // Calculate total pages for pagination
         const totalPages = Math.ceil(totalCount / itemsPerPage);
@@ -167,7 +165,6 @@ exports.mainBookPage = async (req, res) => {
         res.status(500).send("Internal server error.");
     }
 };
-
 
 
 
