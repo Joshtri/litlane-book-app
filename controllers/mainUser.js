@@ -128,6 +128,7 @@ exports.mainBookPage = async (req, res) => {
 
         // Fetch books with pagination
         // const booksPromise = Book.find().sort({ createdAt: -1 }).skip(startIndex).limit(itemsPerPage).lean().exec();
+        
         const booksPromise = Book.find().skip(startIndex).limit(itemsPerPage).lean().exec();   
 
         // Fetch total count of books for pagination
