@@ -48,7 +48,7 @@ exports.postLoginUser = async (req, res) => {
 
       req.flash('successLogin', 'Selamat anda berhasil login');
       //berikan message dengan flash  
-      await req.flash('infoLanjut', 'Informasi pengerjaan UPDATE sistem dan Tampilan website akan dimulai pada tanggal 22 Februari 2024');
+      await req.flash('infoLanjut', 'Informasi pengerjaan UPDATE sistem berupa search dan filter book dan Tampilan website akan dimulai pada tanggal 10 Maret 2024');
       return res.redirect('/mdERQU0pnVpHd08ifQ/adm/dashboardUser');
     } else {
       req.flash('error', 'Username atau password salah.');
